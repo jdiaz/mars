@@ -13,15 +13,15 @@ import java.util.Map;
 /**
  * Created by J. Diaz on 08-12-15.
  */
-public class APIConfiguration {
+public class FreemarkerConfiguration {
 
-    private static Configuration cfg;
+    private Configuration cfg;
 
-    public static void initializeFreemarker(){
+    public FreemarkerConfiguration(){
         // Configure freemarker template
          cfg = new Configuration(Configuration.VERSION_2_3_23);
         try {
-            cfg.setClassForTemplateLoading(ArticleAPI.class, "/");
+            cfg.setClassForTemplateLoading(BlogController.class, "/");
         }
         catch(Exception e){
             e.printStackTrace();
@@ -35,7 +35,7 @@ public class APIConfiguration {
      * @return HTML representation of this API
      * @throws Exception Error Parsing the freemarker template
      */
-    public static String getHtmlApi() throws Exception{
+    public String getHtmlApi() throws Exception{
         Template apiTemplate = cfg.getTemplate("api.ftl");
 
         Map<String, Object> root = new HashMap<>();
