@@ -19,5 +19,7 @@ public class ArticleDAO {
             articlesCollection = blogDatabase.getCollection("articles");
     }
 
+    //Todo
+
 
 }
