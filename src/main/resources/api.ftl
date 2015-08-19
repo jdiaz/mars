@@ -18,7 +18,7 @@
             <tbody>
                 <#list routes as route>
                 <tr>
-                    <td>${route.url}</td>
+                    <td>${route.uri}</td>
                     <td>${route.description}</td>
                 </tr>
                 </#list>

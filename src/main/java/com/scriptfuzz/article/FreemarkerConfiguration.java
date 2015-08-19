@@ -43,21 +43,42 @@ public class FreemarkerConfiguration {
         List<Map> seq = new ArrayList<>();
         Map<String, String> map = new HashMap<>();
 
-        map.put("url", "/");
+        map.put("uri", "/");
         map.put("description", "Display API");
 
         seq.add(map);
 
         map = new HashMap<>();
-        map.put("url", "/article/all");
+        map.put("uri", "/article/all");
         map.put("description", "Gets all articles");
 
         seq.add(map);
 
         map = new HashMap<>();
-        map.put("url", "/article/:year/:title");
-        map.put("description", "Gets article that matches year + title");
+        map.put("uri", "/article/:year");
+        map.put("description", "Get articles that match given year. e.g. 2014, 2015");
 
+        seq.add(map);
+
+        map = new HashMap<>();
+        map.put("uri", "/article/:author");
+        map.put("description", "Gets all articles that match given author");
+
+        seq.add(map);
+
+        map = new HashMap<>();
+        map.put("uri", "/article/:title");
+        map.put("description", "Gets all articles that match given title separated by dashes. e.g Awesome-Blog-Article");
+
+        seq.add(map);
+
+        map = new HashMap<>();
+        map.put("uri", "/article/:year/:title");
+        map.put("description", "Gets article that matches both year & title. e.g. /article/2015/JDiaz");
+
+        seq.add(map);
+
+        // Load the routes onto freemarker processor
         root.put("routes", seq);
 
         StringWriter writer = new StringWriter();
