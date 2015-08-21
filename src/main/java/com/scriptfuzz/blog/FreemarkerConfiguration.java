@@ -1,4 +1,4 @@
-package com.scriptfuzz.article;
+package com.scriptfuzz.blog;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;

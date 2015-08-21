@@ -1,4 +1,4 @@
-package com.scriptfuzz.article;
+package com.scriptfuzz.blog;
 
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
