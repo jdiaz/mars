@@ -22,6 +22,11 @@ public class ArticleDAO {
             articlesCollection = blogDatabase.getCollection("articles");
     }
 
+    /**
+     * Finds all articles in the collection
+     * Returns them a a json string representation
+     * @return JSON string representation of all articles
+     */
     public String findAllArticles(){
         List<Document> all = articlesCollection.find().into(new ArrayList<>());
         Gson gson = new GsonBuilder().disableHtmlEscaping().create();
@@ -30,6 +35,11 @@ public class ArticleDAO {
         return json;
     }
 
+    /**
+     * Finds an article based on a parameter map
+     * @param params The parameters to which match the article to
+     * @return JSON string representation of the article matching the parameters
+     */
     public String findArticlesByFilter(Map<String, String> params){
 
         // Create a MongoDB filter.
@@ -47,6 +57,30 @@ public class ArticleDAO {
         Gson gson = new GsonBuilder().disableHtmlEscaping().create();
         String json = gson.toJson(result);
         return json;
+    }
+
+    /**
+     * Insert an article represented as a markdown string
+     * @param markdownArticle The markdown represenation of the article
+     */
+    public void addNewMarkdownArticle(String markdownArticle){
+        // Create a MongoDb document
+        Document article = new Document();
+
+        //Todo: Add the necesary logic to build the article document
+        String htmlArticle = parseMarkdown(markdownArticle);
+
+        articlesCollection.insertOne(article);
+    }
+
+    /**
+     * Parses a markdown string into HTML
+     * @param markdown The markdown to parse
+     * @return
+     */
+    private String parseMarkdown(String markdown){
+        //Todo: Add the necesary logic to parse the markdown into HTML
+     return "";
     }
 
 

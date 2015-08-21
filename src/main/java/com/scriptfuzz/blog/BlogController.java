@@ -67,16 +67,16 @@ public class BlogController {
           String jsonStr = articleDAO.findAllArticles();
           res.status(200);
           res.type("application/json");
-
-          return jsonStr;
+          res.body(jsonStr);
+          return res;
         });
 
 
         get("/article/:year/:title", (req, res) -> {
-            final String year = req.params(":year");
-            final String title = req.params(":title");
+            String year = req.params(":year");
+            String title = req.params(":title");
 
-            final Map params = new HashMap<String, String>();
+            Map params = new HashMap<String, String>();
 
             params.put("year", year);
             params.put("title", title);
@@ -84,55 +84,74 @@ public class BlogController {
             String jsonStr = articleDAO.findArticlesByFilter(params);
             res.status(200);
             res.type("application/json");
-
-            return jsonStr;
+            res.body(jsonStr);
+            return res;
         });
 
         /**
          * Returns all articles by year
          */
         get("/article/:year", (req, res) -> {
-            final String year = req.queryParams(":year");
-            final Map params = new HashMap<String, String>();
+            String year = req.queryParams(":year");
+            Map params = new HashMap<String, String>();
+
             params.put("year", year);
             System.out.println("Params: "+params.toString());
             String jsonStr = articleDAO.findArticlesByFilter(params);
             res.status(200);
             res.type("application/json");
-
-            return jsonStr;
+            res.body(jsonStr);
+            return res;
         });
 
         /**
          * Find article by title
          */
         get("/article/:title", (req, res) -> {
-            final String title = req.queryParams(":title");
-            final Map params = new HashMap<String, String>();
+            String title = req.queryParams(":title");
+            Map params = new HashMap<String, String>();
             params.put("title", title);
 
             System.out.println("Params: "+params.toString());
             String jsonStr = articleDAO.findArticlesByFilter(params);
             res.status(200);
             res.type("application/json");
-
-            return jsonStr;
+            res.body(jsonStr);
+            return res;
         });
 
         /**
          * Find article by author
          */
         get("/article/:author", (req, res) -> {
-            final String author = req.queryParams(":author");
-            final Map params = new HashMap<String, String>();
+            String author = req.queryParams(":author");
+            Map params = new HashMap<String, String>();
             params.put("author", author);
 
             System.out.println("Params: "+params.toString());
             String jsonStr = articleDAO.findArticlesByFilter(params);
             res.status(200);
             res.type("application/json");
+            res.body(jsonStr);
+            return res;
+        });
 
-            return jsonStr;
+        post("/article/add", (req, res) -> {
+           String markdownArticle = req.body();
+           System.out.println("Markdown recieved: "+markdownArticle);
+
+           try{
+               articleDAO.addNewMarkdownArticle(markdownArticle);
+               res.status(200);
+               res.type("application/json");
+               res.body("{\"success\":true}");
+           }catch(Exception e){
+               res.status(200);
+               res.type("application/json");
+               res.body("{\"success\":false}");
+           }
+
+           return res;
         });
 
     }
