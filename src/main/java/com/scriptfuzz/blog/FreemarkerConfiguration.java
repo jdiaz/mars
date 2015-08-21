@@ -1,4 +1,4 @@
-package com.scriptfuzz.article;
+package com.scriptfuzz.blog;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -13,15 +13,15 @@ import java.util.Map;
 /**
  * Created by J. Diaz on 08-12-15.
  */
-public class APIConfiguration {
+public class FreemarkerConfiguration {
 
-    private static Configuration cfg;
+    private Configuration cfg;
 
-    public static void initializeFreemarker(){
+    public FreemarkerConfiguration(){
         // Configure freemarker template
          cfg = new Configuration(Configuration.VERSION_2_3_23);
         try {
-            cfg.setClassForTemplateLoading(ArticleAPI.class, "/");
+            cfg.setClassForTemplateLoading(BlogController.class, "/");
         }
         catch(Exception e){
             e.printStackTrace();
@@ -35,7 +35,7 @@ public class APIConfiguration {
      * @return HTML representation of this API
      * @throws Exception Error Parsing the freemarker template
      */
-    public static String getHtmlApi() throws Exception{
+    public String getHtmlApi() throws Exception{
         Template apiTemplate = cfg.getTemplate("api.ftl");
 
         Map<String, Object> root = new HashMap<>();
@@ -43,21 +43,42 @@ public class APIConfiguration {
         List<Map> seq = new ArrayList<>();
         Map<String, String> map = new HashMap<>();
 
-        map.put("url", "/");
+        map.put("uri", "/");
         map.put("description", "Display API");
 
         seq.add(map);
 
         map = new HashMap<>();
-        map.put("url", "/article/all");
+        map.put("uri", "/article/all");
         map.put("description", "Gets all articles");
 
         seq.add(map);
 
         map = new HashMap<>();
-        map.put("url", "/article/:year/:title");
-        map.put("description", "Gets article that matches year + title");
+        map.put("uri", "/article/:year");
+        map.put("description", "Get articles that match given year. e.g. 2014, 2015");
 
+        seq.add(map);
+
+        map = new HashMap<>();
+        map.put("uri", "/article/:author");
+        map.put("description", "Gets all articles that match given author");
+
+        seq.add(map);
+
+        map = new HashMap<>();
+        map.put("uri", "/article/:title");
+        map.put("description", "Gets all articles that match given title separated by dashes. e.g Awesome-Blog-Article");
+
+        seq.add(map);
+
+        map = new HashMap<>();
+        map.put("uri", "/article/:year/:title");
+        map.put("description", "Gets article that matches both year & title. e.g. /article/2015/JDiaz");
+
+        seq.add(map);
+
+        // Load the routes onto freemarker processor
         root.put("routes", seq);
 
         StringWriter writer = new StringWriter();
