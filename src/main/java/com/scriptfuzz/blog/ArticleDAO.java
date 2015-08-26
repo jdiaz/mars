@@ -40,7 +40,7 @@ public class ArticleDAO {
      * @param params The parameters to which match the article to
      * @return JSON string representation of the article matching the parameters
      */
-    public String findArticlesByFilter(Map<String, String> params){
+    public List<Document> findArticlesByFilter(Map<String, String> params){
 
         // Create a MongoDB filter.
         Document filter = new Document();
@@ -54,9 +54,7 @@ public class ArticleDAO {
         System.out.println("Final mongoDB filter: "+filter.toJson());
         List<Document> result = articlesCollection.find(filter).into(new ArrayList<>());
 
-        Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-        String json = gson.toJson(result);
-        return json;
+        return result;
     }
 
     /**

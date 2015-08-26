@@ -1,12 +1,16 @@
 package com.scriptfuzz.blog;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
 import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoDatabase;
+import org.bson.Document;
 
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static spark.Spark.*;
@@ -31,6 +35,7 @@ public class BlogController {
 
        cfg = new FreemarkerConfiguration();
        bootstrapRoutes();
+       loadCache();
    }
 
     //Todo: Actually use credentials
@@ -48,6 +53,13 @@ public class BlogController {
         }
 
 
+    }
+
+    private void loadCache(){
+        Map<String,String> params = new HashMap<>();
+        params.put("date", "2015");
+        List<Document> recentArticles = articleDAO.findArticlesByFilter(params);
+        recentArticles.stream().forEach(a -> ArticleCache.addToCache(a));
     }
 
     private void bootstrapRoutes(){
@@ -81,7 +93,7 @@ public class BlogController {
             params.put("year", year);
             params.put("title", title);
             System.out.println("Params: "+params.toString());
-            String jsonStr = articleDAO.findArticlesByFilter(params);
+            String jsonStr = toJsonStr(articleDAO.findArticlesByFilter(params));
             res.status(200);
             res.type("application/json");
             res.body(jsonStr);
@@ -97,7 +109,7 @@ public class BlogController {
 
             params.put("year", year);
             System.out.println("Params: "+params.toString());
-            String jsonStr = articleDAO.findArticlesByFilter(params);
+            String jsonStr = toJsonStr(articleDAO.findArticlesByFilter(params));
             res.status(200);
             res.type("application/json");
             res.body(jsonStr);
@@ -113,7 +125,7 @@ public class BlogController {
             params.put("title", title);
 
             System.out.println("Params: "+params.toString());
-            String jsonStr = articleDAO.findArticlesByFilter(params);
+            String jsonStr = toJsonStr(articleDAO.findArticlesByFilter(params));
             res.status(200);
             res.type("application/json");
             res.body(jsonStr);
@@ -129,7 +141,7 @@ public class BlogController {
             params.put("author", author);
 
             System.out.println("Params: "+params.toString());
-            String jsonStr = articleDAO.findArticlesByFilter(params);
+            String jsonStr = toJsonStr(articleDAO.findArticlesByFilter(params));
             res.status(200);
             res.type("application/json");
             res.body(jsonStr);
@@ -154,5 +166,10 @@ public class BlogController {
            return res;
         });
 
+    }
+
+    private static String toJsonStr(List<Document> in){
+      Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+       return gson.toJson(in);
     }
 }
