@@ -1,7 +1,6 @@
 package com.scriptfuzz.blog;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.github.rjeschke.txtmark.Processor;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
@@ -27,13 +26,17 @@ public class ArticleDAO {
      * Returns them a a json string representation
      * @return JSON string representation of all articles
      */
-    public String findAllArticles(){
+    public List<Document> findAllArticles(){
+
+        Document test2 = new Document(); // I will populate
+        test2.append("_id", false);
         List<Document> all = articlesCollection.find().into(new ArrayList<>());
-        Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-        String json = gson.toJson(all);
-        System.out.println("Returning this from DAO: "+json);
-        return json;
-    }
+        System.out.println("Returning this from DAO: "+all);
+        return all;
+    }// So if my new query must look like this: db.articles.find({},{"_id":false})
+     // I need to provide the query in the same fashion articles being the articlesCollection
+     // However, the api shows the find() only to take 1 filter. That is to say one Document
+     // How to achieve the above?
 
     /**
      * Finds an article based on a parameter map
@@ -66,9 +69,10 @@ public class ArticleDAO {
         Document article = new Document();
 
         //Todo: Add the necesary logic to build the article document
-        String htmlArticle = parseMarkdown(markdownArticle);
-
-        articlesCollection.insertOne(article);
+        String html = parseMarkdown(markdownArticle);
+        article.append("body", html);
+        System.out.println(html);
+        //articlesCollection.insertOne(article);
     }
 
     /**
@@ -78,7 +82,7 @@ public class ArticleDAO {
      */
     private String parseMarkdown(String markdown){
         //Todo: Add the necesary logic to parse the markdown into HTML
-     return "";
+        return Processor.process(markdown);
     }
 
 
