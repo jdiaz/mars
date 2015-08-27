@@ -1,4 +1,4 @@
-app.controller('UIController', ['$scope', '$http', function($scope, $http){
+app.controller('UIController', ['$scope', '$http', function($scope, $http, $sce){
    console.log("Using UI Controller");
    $scope.find = function() {
 

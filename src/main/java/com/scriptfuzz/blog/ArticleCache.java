@@ -22,4 +22,5 @@ public class ArticleCache {
     public static synchronized void addToCache(Document doc){
         articleCache.add(doc);
     }
+
 }

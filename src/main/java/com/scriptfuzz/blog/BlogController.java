@@ -167,7 +167,7 @@ public class BlogController {
                res.body("{\"success\":false}");
            }
 
-           return res;
+           return res.body();
         });
 
 

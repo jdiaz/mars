@@ -62,17 +62,21 @@ public class ArticleDAO {
 
     /**
      * Insert an article represented as a markdown string
-     * @param markdownArticle The markdown represenation of the article
+     * @param jsonArticle The markdown represenation of the article
      */
-    public void addNewMarkdownArticle(String markdownArticle){
+    public void addNewMarkdownArticle(String jsonArticle){
         // Create a MongoDb document
-        Document article = new Document();
+        Document article = Document.parse(jsonArticle);
+        // Todo: use a real logger :p
+        System.out.println("Lets very it parsed correctly: "+article.toJson());
 
-        //Todo: Add the necesary logic to build the article document
-        String html = parseMarkdown(markdownArticle);
-        article.append("body", html);
-        System.out.println(html);
-        //articlesCollection.insertOne(article);
+        String htmlBody = parseMarkdown(article.getString("content"));
+
+        article.put("content",htmlBody);
+
+        System.out.println("Verifying document before insertion: "+article.toJson());
+        articlesCollection.insertOne(article);
+
     }
 
     /**

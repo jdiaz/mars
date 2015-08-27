@@ -11,7 +11,10 @@
     <button class="button" ng-click="find()">Find</button>
 
     <div ng-repeat="post in articles">
-     <p>{{post}}</p>
+     <h1>{{post.title}}</h1>
+     <p>Posted on <i>{{post.date}}</i> by <strong>{{post.author}}</strong></p>
+     <p>{{post.content}}</p>
+     <div ng-bind-html-unsafe="post.content"></div>
     </div>
 </div>
 
