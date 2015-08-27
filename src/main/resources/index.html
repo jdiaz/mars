@@ -1,0 +1,28 @@
+<!DOCTYPE>
+<html>
+<head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+</head>
+<body ng-app="Blogapp">
+
+<div ng-controller="UIController">
+    <h1>Testing the routes!</h1>
+    <button class="button" ng-click="find()">Find</button>
+
+    <div ng-repeat="post in articles">
+     <h1>{{post.title}}</h1>
+     <p>Posted on <i>{{post.date}}</i> by <strong>{{post.author}}</strong></p>
+     <p>{{post.content}}</p>
+     <div ng-bind-html-unsafe="post.content"></div>
+    </div>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js" type="application/javascript"></script>
+<script src="app.js" ></script>
+<script src="uiController.js" ></script>
+</body>
+
+
+</html>
