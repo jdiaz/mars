@@ -30,6 +30,10 @@ public class FreemarkerConfiguration {
         cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
     }
 
+    public Configuration getConfiguration(){
+        return cfg;
+    }
+
     /**
      * Build an HTML represenation of all the routes supported in this API
      * @return HTML representation of this API

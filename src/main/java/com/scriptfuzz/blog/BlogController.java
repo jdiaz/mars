@@ -7,6 +7,8 @@ import com.mongodb.MongoClientOptions;
 import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
+import spark.ModelAndView;
+import spark.template.freemarker.FreeMarkerEngine;
 
 
 import java.util.HashMap;
@@ -35,7 +37,7 @@ public class BlogController {
 
        cfg = new FreemarkerConfiguration();
        // Serve the static files
-       externalStaticFileLocation("src/main/resources");
+       externalStaticFileLocation("src/main/resources/");
        bootstrapRoutes();
        loadCache();
    }
@@ -57,10 +59,16 @@ public class BlogController {
 
     }
 
+    /**
+     * Loads recent articles from DB to memory
+     * Todo Fix the hardcoded date
+     * Todo Preferably provide a range
+     */
     private void loadCache(){
         Map<String,String> params = new HashMap<>();
         //Todo The year should not be hardcoded
-        params.put("date", "2015");
+        //Fix this crap
+        params.put("date", "2015-08-15");
         List<Document> recentArticles = articleDAO.findArticlesByFilter(params);
         recentArticles.stream().forEach(a -> ArticleCache.addToCache(a));
     }
@@ -69,10 +77,41 @@ public class BlogController {
         //--------------------------------------------------------------//
         //                          API ROUTES                          //
         //--------------------------------------------------------------//
+
+
         /**
          * Displays the api
          */
-        get("/all", (req, res) -> cfg.getHtmlApi());
+        get("/api", (req, res) -> cfg.getHtmlApi());
+
+        /**
+         * Upon hitting root of the page load articles
+         * from memory cache instead of going to DB
+         * Get recent articles
+         * Todo Decide what this will return
+         */
+        get("/article/load", (req, res) -> {
+            List<Document> recent = ArticleCache.getRecentArticles();
+            //String json = toJsonStr(recent);
+            int count = recent.size();
+            return count;
+        });
+
+        get("/", (req, res) -> {
+               return new ModelAndView(new HashMap<>(),"index.ftl");
+        }, new FreeMarkerEngine(cfg.getConfiguration()) );
+
+
+        get("/article/recent", (req, res) -> toJsonStr(ArticleCache.getRecentArticles()) );
+
+        /**
+         * Test out clearing the cache
+         * Fix this crap
+         */
+        get("/article/clear", (req,res) -> {
+            ArticleCache.clearCache();
+            return res;
+        });
 
         /**
          * Returns all articles in db
@@ -152,12 +191,17 @@ public class BlogController {
             return res;
         });
 
+        /**
+         * Add a new article.
+         */
         post("/article/add", (req, res) -> {
            String markdownArticle = req.body();
            System.out.println("Markdown recieved: "+markdownArticle);
-
            try{
-               articleDAO.addNewMarkdownArticle(markdownArticle);
+               // Add to DB
+               Document articleAdded = articleDAO.addNewMarkdownArticle(markdownArticle);
+               // Add to cache
+               ArticleCache.addToCache(articleAdded);
                res.status(200);
                res.type("application/json");
                res.body("{\"success\":true}");
@@ -169,6 +213,10 @@ public class BlogController {
 
            return res.body();
         });
+
+        get("/test", (req, res) -> {
+          return  new ModelAndView( new HashMap<>(),"index");
+        }, new FreeMarkerEngine(cfg.getConfiguration()));
 
 
     }

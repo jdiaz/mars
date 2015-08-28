@@ -54,7 +54,7 @@ public class ArticleDAO {
             // Todo: Might need to convert numbers to native type
             filter.append(key.toString(), params.get(key));
         });
-        System.out.println("Final mongoDB filter: "+filter.toJson());
+      //  System.out.println("Final mongoDB filter: "+filter.toJson());
         List<Document> result = articlesCollection.find(filter).into(new ArrayList<>());
 
         return result;
@@ -64,7 +64,7 @@ public class ArticleDAO {
      * Insert an article represented as a markdown string
      * @param jsonArticle The markdown represenation of the article
      */
-    public void addNewMarkdownArticle(String jsonArticle){
+    public Document addNewMarkdownArticle(String jsonArticle){
         // Create a MongoDb document
         Document article = Document.parse(jsonArticle);
         // Todo: use a real logger :p
@@ -76,7 +76,7 @@ public class ArticleDAO {
 
         System.out.println("Verifying document before insertion: "+article.toJson());
         articlesCollection.insertOne(article);
-
+        return article;
     }
 
     /**
