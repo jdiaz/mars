@@ -3,15 +3,16 @@
  */
 'use strict';
 
-angular.module('BlogApp')
+angular.module('Blogapp')
     .controller('ArticleCtrl', function ($scope, $http, $routeParams, $sce) {
         console.log('inside article controller');
 
-        var id = $routeParams.id;
-        $http.get('/articles/title/'+id).success(function(data){
+        var title = $routeParams.title;
+        var year = $routeParams.year;
+        $http.get('/articles/'+year+"/"+title).success(function(data){
             $scope.article = data;
 
-            console.log('retrieved this data: %j',data.articles_found);
+            console.log('retrieved this data: %j',data);
         });
 
 });

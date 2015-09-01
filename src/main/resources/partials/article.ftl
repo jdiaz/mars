@@ -2,7 +2,7 @@
 <!--button class="button" ng-click="find()">Find</button-->
 
 <div ng-repeat="post in articles">
-    <h1><a href="/article/{{post.title}}">{{post.title}}</a></h1>
+    <h1><a href="/article/{{post.year}}/{{post.title}}">{{post.title}}</a></h1>
     <p>Posted on <i>{{post.date}}</i> by <strong>{{post.author}}</strong></p>
     <!-- Fix automatic newline appending here...-->
     <button ng-repeat="tag in post.tags">{{ tag }}</button>
@@ -23,5 +23,7 @@
             (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
         })();
     </script>
-    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    <noscript>Please enable JavaScript to view the
+        <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+    </noscript>
 </div>

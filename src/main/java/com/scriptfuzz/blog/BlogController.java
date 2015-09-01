@@ -14,14 +14,15 @@ import spark.template.freemarker.FreeMarkerEngine;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import static spark.Spark.*;
 /**
  * Created by J. Diaz on 08-04-15.
  */
 public class BlogController {
-    private static int CONNECTION_POOLS = 100;
-
+    private static final int CONNECTION_POOLS = 100;
+    public static final Logger log = Logger.getLogger(BlogController.class.getName());
     private final FreemarkerConfiguration cfg;
     private final ArticleDAO articleDAO;
 
@@ -65,6 +66,7 @@ public class BlogController {
      * Todo Preferably provide a range
      */
     private void loadCache(){
+        log.info("Loading article memory cache");
         Map<String,String> params = new HashMap<>();
         //Todo The year should not be hardcoded
         //Fix this crap
@@ -91,9 +93,11 @@ public class BlogController {
          * Todo Decide what this will return
          */
         get("/article/load", (req, res) -> {
+            log.info("Received: "+req.toString());
             List<Document> recent = ArticleCache.getRecentArticles();
             //String json = toJsonStr(recent);
             int count = recent.size();
+            log.info("Loaded "+count +" articles from cache");
             return count;
         });
 
@@ -109,6 +113,7 @@ public class BlogController {
          * Fix this crap
          */
         get("/article/clear", (req,res) -> {
+            log.info("Received: "+req.toString());
             ArticleCache.clearCache();
             return res;
         });
@@ -117,8 +122,9 @@ public class BlogController {
          * Returns all articles in db
          */
         get("/article/all", (req, res) -> {
-
+          log.info("Request: "+req);
           String jsonStr = toJsonStr(articleDAO.findAllArticles());
+          log.info("Response: "+jsonStr);
           res.status(200);
           res.type("application/json");
           res.body(jsonStr);
@@ -130,12 +136,13 @@ public class BlogController {
          * Returns all articles by year
          */
         get("/article/year/:year", (req, res) -> {
+            log.info("Request: "+req);
             String year = req.params("year");
             Map params = new HashMap<String, String>();
 
             params.put("year", year);
-            System.out.println("Params: "+params.toString());
             String jsonStr = toJsonStr(articleDAO.findArticlesByFilter(params));
+            log.info("Response: "+jsonStr);
             res.status(200);
             res.type("application/json");
             res.body(jsonStr);
@@ -146,13 +153,13 @@ public class BlogController {
          * Find article by title
          */
         get("/article/title/:title", (req, res) -> {
+            log.info("Request: "+req);
             String title = req.params("title");
             Map params = new HashMap<String, String>();
             params.put("title", title);
 
-            System.out.println("Params: "+params.toString());
             String jsonStr = toJsonStr(articleDAO.findArticlesByFilter(params));
-            System.out.println("/article/title => "+jsonStr);
+            log.info("Response: "+jsonStr);
             res.status(200);
             res.type("application/json");
             res.body(jsonStr);
@@ -163,12 +170,13 @@ public class BlogController {
          * Find article by author
          */
         get("/article/author/:author", (req, res) -> {
+            log.info("Request: "+req);
             String author = req.params("author");
             Map params = new HashMap<String, String>();
             params.put("author", author);
 
-            System.out.println("Params: "+params.toString());
             String jsonStr = toJsonStr(articleDAO.findArticlesByFilter(params));
+            log.info("Response: "+jsonStr);
             res.status(200);
             res.type("application/json");
             res.body(jsonStr);
@@ -176,27 +184,31 @@ public class BlogController {
         });
 
         get("/article/:year/:title", (req, res) -> {
+            log.info("Request: "+req);
             String year = req.params(":year");
             String title = req.params(":title");
 
-            Map params = new HashMap<String, String>();
+            Map<String, String> params = new HashMap<>();
 
             params.put("year", year);
             params.put("title", title);
-            System.out.println("Params: "+params.toString());
             String jsonStr = toJsonStr(articleDAO.findArticlesByFilter(params));
+            log.info("Response: "+jsonStr);
             res.status(200);
             res.type("application/json");
             res.body(jsonStr);
-            return res;
+            return jsonStr;
         });
 
         /**
          * Add a new article.
          */
         post("/article/add", (req, res) -> {
+           log.info("Request: "+req);
            String markdownArticle = req.body();
-           System.out.println("Markdown recieved: "+markdownArticle);
+           System.out.println("Markdown received: "+markdownArticle);
+
+           log.fine("Attempting to parse markdown and add to cache");
            try{
                // Add to DB
                Document articleAdded = articleDAO.addNewMarkdownArticle(markdownArticle);
@@ -210,7 +222,7 @@ public class BlogController {
                res.type("application/json");
                res.body("{\"success\":false}");
            }
-
+           log.info("Response: "+req.body());
            return res.body();
         });
 

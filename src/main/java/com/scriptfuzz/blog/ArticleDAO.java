@@ -9,12 +9,14 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.Map;
+import java.util.logging.Logger;
 
 /**
  * Created by J. Diaz on 08-12-15.
  */
 public class ArticleDAO {
 
+    public static final Logger log = Logger.getLogger(ArticleDAO.class.getName());
     private final MongoCollection<Document> articlesCollection;
 
     public ArticleDAO(MongoDatabase blogDatabase) {
@@ -30,8 +32,9 @@ public class ArticleDAO {
 
         Document test2 = new Document(); // I will populate
         test2.append("_id", false);
+        log.fine("Filter: "+test2);
         List<Document> all = articlesCollection.find().into(new ArrayList<>());
-        System.out.println("Returning this from DAO: "+all);
+        log.info("Returning this from DAO: "+all);
         return all;
     }// So if my new query must look like this: db.articles.find({},{"_id":false})
      // I need to provide the query in the same fashion articles being the articlesCollection
@@ -54,8 +57,10 @@ public class ArticleDAO {
             // Todo: Might need to convert numbers to native type
             filter.append(key.toString(), params.get(key));
         });
-      //  System.out.println("Final mongoDB filter: "+filter.toJson());
+
+        log.info("Searching with filter: "+filter.toJson());
         List<Document> result = articlesCollection.find(filter).into(new ArrayList<>());
+        log.info("Result: "+result);
 
         return result;
     }
@@ -68,14 +73,15 @@ public class ArticleDAO {
         // Create a MongoDb document
         Document article = Document.parse(jsonArticle);
         // Todo: use a real logger :p
-        System.out.println("Lets very it parsed correctly: "+article.toJson());
+        log.info("Received article: "+article.toJson());
 
         String htmlBody = parseMarkdown(article.getString("content"));
 
         article.put("content",htmlBody);
 
-        System.out.println("Verifying document before insertion: "+article.toJson());
+        log.info("Verifying document before insertion: "+article.toJson());
         articlesCollection.insertOne(article);
+        log.fine("Document inserted.");
         return article;
     }
 
@@ -86,7 +92,9 @@ public class ArticleDAO {
      */
     private String parseMarkdown(String markdown){
         //Todo: Add the necesary logic to parse the markdown into HTML
-        return Processor.process(markdown);
+        String res = Processor.process(markdown);
+        log.info("Markdown HTML equivalent: "+res);
+        return res;
     }
 
 
