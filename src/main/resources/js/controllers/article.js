@@ -3,16 +3,20 @@
  */
 'use strict';
 
-angular.module('Blogapp')
+angular.module('BlogApp')
     .controller('ArticleCtrl', function ($scope, $http, $routeParams, $sce) {
         console.log('inside article controller');
 
-        var title = $routeParams.title;
-        var year = $routeParams.year;
-        $http.get('/articles/'+year+"/"+title).success(function(data){
-            $scope.article = data;
+        var id = $routeParams.id;
+        $http.get('/api/articles/title/'+id).success(function(data){
+            console.log('Received: '+JSON.stringify(data));
+            $scope.article = data[0];
 
-            console.log('retrieved this data: %j',data);
+            $scope.article.dispTitle = data[0].title.replace(/-/g,' ');
+
+            $scope.article.content = $sce.trustAsHtml(data[0].content);
+
+            console.log('retrieved this data: %j', $scope.article);
         });
 
-});
+    });

@@ -1,26 +1,37 @@
-var app = angular.module('Blogapp', ['ngRoute'])
+'use strict';
+
+angular.module('BlogApp', ['ngRoute'])
     .config(function ($routeProvider, $locationProvider) {
         $locationProvider.html5Mode(true);
         $routeProvider
             .when('/', {
-                templateUrl: '/index.ftl',
+                templateUrl: '/partials/main.html',
                 controller: 'MainCtrl'
-            }).when('/articles', {
+            }).
+            when('/articles', {
                 templateUrl: '/partials/main.html',
                 controller: 'MainCtrl'
             })
-//            .when('/articles/new', {
-//                templateUrl: '/partials/new_article.html'
-//            })
-            .when('/articles/:year/:title', {
-                templateUrl: '/partials/article.ftl',
+            .when('/articles/new', {
+                templateUrl: '/partials/new_article.html'
+            })
+            .when('/articles/:year/:id', {
+                templateUrl: '/partials/article.html',
                 controller: 'ArticleCtrl'
             })
-//            .when('/login', {
-//                templateUrl: '/partials/login.html',
-//                controller: 'LoginCtrl'
-//            })
+            //.when('/login', {
+            //    templateUrl: '/partials/login.html'//,
+            //    // controller: 'LoginCtrl'
+            //})
+//      .when('/user', {
+//            templateUrl: '/partials/user.html'
+//       })
             .otherwise({
                 redirectTo: '/'
             });
+
+
     });
+
+
+

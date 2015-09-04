@@ -27,6 +27,7 @@ public class FreemarkerConfiguration {
             e.printStackTrace();
         }
         cfg.setDefaultEncoding("UTF-8");
+
         cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
     }
 

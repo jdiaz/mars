@@ -30,9 +30,9 @@ public class ArticleDAO {
      */
     public List<Document> findAllArticles(){
 
-        Document test2 = new Document(); // I will populate
-        test2.append("_id", false);
-        log.fine("Filter: "+test2);
+        Document filter = new Document(); // I will populate
+        filter.append("_id", false);
+        log.fine("Filter: "+filter);
         List<Document> all = articlesCollection.find().into(new ArrayList<>());
         log.info("Returning this from DAO: "+all);
         return all;
@@ -50,11 +50,11 @@ public class ArticleDAO {
 
         // Create a MongoDB filter.
         Document filter = new Document();
+        //Todo Need this => db.articles.find({},{_id: false})
 
         // Find all parameters to filter by and add them to the mongoDB filter
         Set keys = params.keySet();
         keys.stream().forEach( (key)-> {
-            // Todo: Might need to convert numbers to native type
             filter.append(key.toString(), params.get(key));
         });
 

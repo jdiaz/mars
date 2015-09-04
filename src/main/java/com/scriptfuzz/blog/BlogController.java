@@ -9,8 +9,11 @@ import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 import spark.ModelAndView;
 import spark.template.freemarker.FreeMarkerEngine;
+import spark.utils.IOUtils;
 
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,17 +32,27 @@ public class BlogController {
     //Todo: Use actual username password combo
     // Right now is being ignored
    public BlogController(String username, String password, String host, int port){
+       log.info("Server running on port: "+port);
        MongoClientOptions options = MongoClientOptions.builder().connectionsPerHost(CONNECTION_POOLS).build();
 
        final MongoClient mongoClient = new MongoClient(new ServerAddress(host, port), options);
        //final MongoDatabase blogDatabase = mongoClient.getDatabase("blog");
+       log.info("Connecting to mongo: "+mongoClient);
        final MongoDatabase blogDatabase = mongoClient.getDatabase("test");
+       log.info("Got database: "+blogDatabase);
        articleDAO = new ArticleDAO(blogDatabase);
 
        cfg = new FreemarkerConfiguration();
        // Serve the static files
        externalStaticFileLocation("src/main/resources/");
+
+       // Enable CORS
+       enableCORS();
+
+       // Initialize roots
        bootstrapRoutes();
+
+       // Load memory cache
        loadCache();
    }
 
@@ -47,6 +60,7 @@ public class BlogController {
     public static void main(String[] args){
 
         String mode = System.getProperty("mode");
+        log.info("Running on mode: "+mode);
         if("production".equalsIgnoreCase(mode)) {
             String username = "Thatguy";
             String password = "thisguy";
@@ -56,8 +70,6 @@ public class BlogController {
             String password = "thisguy";
             new BlogController(username, password, "localhost", 27017);
         }
-
-
     }
 
     /**
@@ -75,11 +87,17 @@ public class BlogController {
         recentArticles.stream().forEach(a -> ArticleCache.addToCache(a));
     }
 
-    private void bootstrapRoutes(){
+    private void bootstrapRoutes() {
         //--------------------------------------------------------------//
         //                          API ROUTES                          //
         //--------------------------------------------------------------//
-
+        before("/", (req, res) -> {
+           try( InputStream stream = getClass().getResourceAsStream("/index.html")){
+               halt(200, IOUtils.toString(stream));
+           }catch (IOException e){
+               log.severe("Error serving index: "+e);
+           }
+        });
 
         /**
          * Displays the api
@@ -92,28 +110,25 @@ public class BlogController {
          * Get recent articles
          * Todo Decide what this will return
          */
-        get("/article/load", (req, res) -> {
-            log.info("Received: "+req.toString());
+        get("/api/article/load", (req, res) -> {
             List<Document> recent = ArticleCache.getRecentArticles();
             //String json = toJsonStr(recent);
             int count = recent.size();
-            log.info("Loaded "+count +" articles from cache");
+            log.info("Loaded " + count + " articles from cache");
             return count;
         });
 
-        get("/", (req, res) -> {
-               return new ModelAndView(new HashMap<>(),"index.ftl");
-        }, new FreeMarkerEngine(cfg.getConfiguration()) );
+//        get("/", (req, res) -> {
+//            return new ModelAndView(new HashMap<>(), "index.html");
+//        }, new FreeMarkerEngine(cfg.getConfiguration()) );
 
-
-        get("/article/recent", (req, res) -> toJsonStr(ArticleCache.getRecentArticles()) );
+        get("/api/articles/recent", (req, res) -> toJsonStr(ArticleCache.getRecentArticles()));
 
         /**
          * Test out clearing the cache
          * Fix this crap
          */
-        get("/article/clear", (req,res) -> {
-            log.info("Received: "+req.toString());
+        get("/article/clear", (req, res) -> {
             ArticleCache.clearCache();
             return res;
         });
@@ -121,28 +136,25 @@ public class BlogController {
         /**
          * Returns all articles in db
          */
-        get("/article/all", (req, res) -> {
-          log.info("Request: "+req);
-          String jsonStr = toJsonStr(articleDAO.findAllArticles());
-          log.info("Response: "+jsonStr);
-          res.status(200);
-          res.type("application/json");
-          res.body(jsonStr);
-          return jsonStr;
+        get("/api/articles/all", (req, res) -> {
+            String jsonStr = toJsonStr(articleDAO.findAllArticles());
+            log.info("Response: " + jsonStr);
+            res.status(200);
+            res.type("application/json");
+            res.body(jsonStr);
+            return jsonStr;
         });
-
 
         /**
          * Returns all articles by year
          */
-        get("/article/year/:year", (req, res) -> {
-            log.info("Request: "+req);
+        get("/api/articles/year/:year", (req, res) -> {
             String year = req.params("year");
             Map params = new HashMap<String, String>();
 
             params.put("year", year);
             String jsonStr = toJsonStr(articleDAO.findArticlesByFilter(params));
-            log.info("Response: "+jsonStr);
+            log.info("Response: " + jsonStr);
             res.status(200);
             res.type("application/json");
             res.body(jsonStr);
@@ -152,14 +164,13 @@ public class BlogController {
         /**
          * Find article by title
          */
-        get("/article/title/:title", (req, res) -> {
-            log.info("Request: "+req);
+        get("/api/articles/title/:title", (req, res) -> {
             String title = req.params("title");
             Map params = new HashMap<String, String>();
             params.put("title", title);
 
             String jsonStr = toJsonStr(articleDAO.findArticlesByFilter(params));
-            log.info("Response: "+jsonStr);
+            log.info("Response: " + jsonStr);
             res.status(200);
             res.type("application/json");
             res.body(jsonStr);
@@ -169,22 +180,20 @@ public class BlogController {
         /**
          * Find article by author
          */
-        get("/article/author/:author", (req, res) -> {
-            log.info("Request: "+req);
+        get("/api/articles/author/:author", (req, res) -> {
             String author = req.params("author");
             Map params = new HashMap<String, String>();
             params.put("author", author);
 
             String jsonStr = toJsonStr(articleDAO.findArticlesByFilter(params));
-            log.info("Response: "+jsonStr);
+            log.info("Response: " + jsonStr);
             res.status(200);
             res.type("application/json");
             res.body(jsonStr);
             return res;
         });
 
-        get("/article/:year/:title", (req, res) -> {
-            log.info("Request: "+req);
+        get("/api/articles/:year/:title", (req, res) -> {
             String year = req.params(":year");
             String title = req.params(":title");
 
@@ -193,7 +202,7 @@ public class BlogController {
             params.put("year", year);
             params.put("title", title);
             String jsonStr = toJsonStr(articleDAO.findArticlesByFilter(params));
-            log.info("Response: "+jsonStr);
+            log.info("Response: " + jsonStr);
             res.status(200);
             res.type("application/json");
             res.body(jsonStr);
@@ -203,38 +212,51 @@ public class BlogController {
         /**
          * Add a new article.
          */
-        post("/article/add", (req, res) -> {
-           log.info("Request: "+req);
-           String markdownArticle = req.body();
-           System.out.println("Markdown received: "+markdownArticle);
+        post("/api/articles/add", (req, res) -> {
+            log.info("Request: " + req);
+            String markdownArticle = req.body();
+            log.fine("Markdown received: " + markdownArticle);
 
-           log.fine("Attempting to parse markdown and add to cache");
-           try{
-               // Add to DB
-               Document articleAdded = articleDAO.addNewMarkdownArticle(markdownArticle);
-               // Add to cache
-               ArticleCache.addToCache(articleAdded);
-               res.status(200);
-               res.type("application/json");
-               res.body("{\"success\":true}");
-           }catch(Exception e){
-               res.status(200);
-               res.type("application/json");
-               res.body("{\"success\":false}");
-           }
-           log.info("Response: "+req.body());
-           return res.body();
+            log.fine("Attempting to parse markdown and add to cache");
+            try {
+                // Add to DB
+                Document articleAdded = articleDAO.addNewMarkdownArticle(markdownArticle);
+                // Add to cache
+                ArticleCache.addToCache(articleAdded);
+                res.status(200);
+                res.type("application/json");
+                res.body("{\"success\":true}");
+            } catch (Exception e) {
+                log.severe("Error adding an article: " +e);
+                res.status(200);
+                res.type("application/json");
+                res.body("{\"success\":false}");
+            }
+            log.info("Response: " + req.body());
+            return res.body();
         });
+//
+//        get("*", (req, res) -> {
+//            try( InputStream stream = getClass().getResourceAsStream("/index.html")){
+//                halt(200, IOUtils.toString(stream));
+//            }catch (IOException e){
+//                log.severe("Error serving index: "+e);
+//            }
+//            return 0;
+//        });
+    }
 
-        get("/test", (req, res) -> {
-          return  new ModelAndView( new HashMap<>(),"index");
-        }, new FreeMarkerEngine(cfg.getConfiguration()));
-
-
+    private void enableCORS(){
+        before((req, res) -> {
+            log.info(req.host() + " " +req.contentType() + " "+req.ip() + " " +req.headers());
+            res.header("Access-Control-Allow-Origin", "*");
+            res.header("Access-Control-Allow-Methods", "X-Requested-With, Content-Type, Content-Length, Authorization");
+            res.header("Access-Control-Allow-Headers", "GET,PUT,POST,DELETE,OPTIONS");
+        });
     }
 
     private static String toJsonStr(List<Document> in){
-      Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
+       Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
        return gson.toJson(in);
     }
 }
