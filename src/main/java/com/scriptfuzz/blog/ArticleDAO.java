@@ -60,7 +60,7 @@ public class ArticleDAO {
 
         log.info("Searching with filter: "+filter.toJson());
         List<Document> result = articlesCollection.find(filter).into(new ArrayList<>());
-        log.info("Result: "+result);
+//        log.info("Result: "+result);
 
         return result;
     }
