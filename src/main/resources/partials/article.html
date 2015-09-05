@@ -3,6 +3,8 @@
 <p>Posted on <i>{{article.date}}</i> by <strong>{{article.author}}</strong></p>
 <!-- Fix automatic newline appending here...-->
 <button ng-repeat="tag in article.tags">{{ tag }}</button>
+<br>
+<br>
 <div ng-bind-html="article.content">
 </div>
 <br>

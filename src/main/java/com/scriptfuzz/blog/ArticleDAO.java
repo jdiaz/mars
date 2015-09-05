@@ -36,6 +36,7 @@ public class ArticleDAO {
         List<Document> all = articlesCollection.find().into(new ArrayList<>());
         log.info("Returning this from DAO: "+all);
         return all;
+
     }// So if my new query must look like this: db.articles.find({},{"_id":false})
      // I need to provide the query in the same fashion articles being the articlesCollection
      // However, the api shows the find() only to take 1 filter. That is to say one Document
@@ -83,6 +84,10 @@ public class ArticleDAO {
         articlesCollection.insertOne(article);
         log.fine("Document inserted.");
         return article;
+    }
+
+    public String transform(String markdown){
+        return parseMarkdown(markdown);
     }
 
     private static String makePreview(String html){

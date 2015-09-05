@@ -1,0 +1,18 @@
+<div id="preview">
+    <textarea id="input" rows="10" cols=120 ng-model="markdown">{{markdown}}</textarea>
+    <br>
+    <button ng-click="transform()">preview</button>
+    <br>
+    <div>
+        As HTML text:
+        <br>
+        <prev>
+            <code>{{html.content}}</code>
+        </prev>
+    </div>
+    <br>
+    HTML injected:
+    <div ng-bind-html="html.content">
+    </div>
+
+</div>

@@ -12,8 +12,9 @@ angular.module('BlogApp', ['ngRoute'])
                 templateUrl: '/partials/main.html',
                 controller: 'MainCtrl'
             })
-            .when('/articles/new', {
-                templateUrl: '/partials/new_article.html'
+            .when('/articles/admin', {
+                templateUrl: '/partials/admin.html',
+                controller: 'AdminCtrl'
             })
             .when('/articles/:year/:id', {
                 templateUrl: '/partials/article.html',

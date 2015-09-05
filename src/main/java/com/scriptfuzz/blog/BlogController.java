@@ -237,6 +237,14 @@ public class BlogController {
             return res.body();
         });
 
+        post("/api/articles/transform", (req, res) -> {
+            String markdown = req.body();
+            String transformed = articleDAO.transform(markdown);
+            Document html = new Document();
+            html.append("content", transformed);
+            return html.toJson();
+        });
+
 //        get("*", (req, res) -> {
 //            try( InputStream stream = getClass().getResourceAsStream("/index.html")){
 //                halt(200, IOUtils.toString(stream));
