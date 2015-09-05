@@ -13,6 +13,7 @@ angular.module('BlogApp')
                    console.log('iterating through: ' +JSON.stringify(curr));
                    $scope.articles[index].content = $sce.trustAsHtml(curr.content);
                    $scope.articles[index].dispTitle = $scope.articles[index].title.replace(/-/g,' ');
+                   $scope.articles[index].preview = $sce.trustAsHtml($scope.articles[index].preview);
                });
            });
 

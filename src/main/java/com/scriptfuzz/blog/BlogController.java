@@ -99,6 +99,7 @@ public class BlogController {
            }
         });
 
+
         /**
          * Displays the api
          */
@@ -221,7 +222,7 @@ public class BlogController {
             try {
                 // Add to DB
                 Document articleAdded = articleDAO.addNewMarkdownArticle(markdownArticle);
-                // Add to cache
+                // Add to
                 ArticleCache.addToCache(articleAdded);
                 res.status(200);
                 res.type("application/json");
@@ -235,7 +236,7 @@ public class BlogController {
             log.info("Response: " + req.body());
             return res.body();
         });
-//
+
 //        get("*", (req, res) -> {
 //            try( InputStream stream = getClass().getResourceAsStream("/index.html")){
 //                halt(200, IOUtils.toString(stream));

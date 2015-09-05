@@ -77,20 +77,28 @@ public class ArticleDAO {
 
         String htmlBody = parseMarkdown(article.getString("content"));
 
-        article.put("content",htmlBody);
-
+        article.put("content", htmlBody);
+        article.put("preview", makePreview(htmlBody));
         log.info("Verifying document before insertion: "+article.toJson());
         articlesCollection.insertOne(article);
         log.fine("Document inserted.");
         return article;
     }
 
+    private static String makePreview(String html){
+        String pCloseTag = "</p>";
+
+        int pCloseIndex = html.indexOf(pCloseTag);
+        String preview = html.substring(0 , pCloseIndex + pCloseTag.length() + 1);
+        log.info("Created: "+preview);
+        return preview;
+    }
     /**
      * Parses a markdown string into HTML
      * @param markdown The markdown to parse
      * @return
      */
-    private String parseMarkdown(String markdown){
+    private static String parseMarkdown(String markdown){
         //Todo: Add the necesary logic to parse the markdown into HTML
         String res = Processor.process(markdown);
         log.info("Markdown HTML equivalent: "+res);
