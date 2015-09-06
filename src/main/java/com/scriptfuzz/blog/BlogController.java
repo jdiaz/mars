@@ -111,28 +111,26 @@ public class BlogController {
          * Get recent articles
          * Todo Decide what this will return
          */
-        get("/api/article/load", (req, res) -> {
-            List<Document> recent = ArticleCache.getRecentArticles();
-            //String json = toJsonStr(recent);
-            int count = recent.size();
+        get("/api/cache/load/:year", (req, res) -> {
+            String y = req.params(":year");
+            Map<String,String> params = new HashMap<>();
+            params.put("year", y);
+            List<Document> recent = articleDAO.findArticlesByFilter(params);
+            int count = ArticleCache.loadCache(recent);
             log.info("Loaded " + count + " articles from cache");
             return count;
         });
-
-//        get("/", (req, res) -> {
-//            return new ModelAndView(new HashMap<>(), "index.html");
-//        }, new FreeMarkerEngine(cfg.getConfiguration()) );
-
-        get("/api/articles/recent", (req, res) -> toJsonStr(ArticleCache.getRecentArticles()));
 
         /**
          * Test out clearing the cache
          * Fix this crap
          */
-        get("/article/clear", (req, res) -> {
+        get("/api/cache/clear", (req, res) -> {
             ArticleCache.clearCache();
-            return res;
+            return "ArticleCache cleared!";
         });
+
+        get("/api/articles/recent", (req, res) -> toJsonStr(ArticleCache.getRecentArticles()));
 
         /**
          * Returns all articles in db
@@ -245,19 +243,16 @@ public class BlogController {
             return html.toJson();
         });
 
-//        get("*", (req, res) -> {
-//            try( InputStream stream = getClass().getResourceAsStream("/index.html")){
-//                halt(200, IOUtils.toString(stream));
-//            }catch (IOException e){
-//                log.severe("Error serving index: "+e);
-//            }
-//            return 0;
+
+//        get("/*", (req, res) -> {
+//            res.redirect("/");
+//            return  0;
 //        });
     }
 
     private void enableCORS(){
         before((req, res) -> {
-            log.info(req.host() + " " +req.contentType() + " "+req.ip() + " " +req.headers());
+            log.info("Request => host=" +req.host() + " URI="+req.uri() +" ContentType=" +req.contentType() + " IP="+req.ip() );
             res.header("Access-Control-Allow-Origin", "*");
             res.header("Access-Control-Allow-Methods", "X-Requested-With, Content-Type, Content-Length, Authorization");
             res.header("Access-Control-Allow-Headers", "GET,PUT,POST,DELETE,OPTIONS");

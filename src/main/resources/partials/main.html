@@ -1,10 +1,12 @@
 
 <div ng-repeat="post in articles">
-    <h1><a href="/articles/{{post.year}}/{{post.title}}">{{post.dispTitle}}</a></h1>
-    <p>Posted on <i>{{post.date}}</i> by <strong>{{post.author}}</strong></p>
-    <!-- Fix automatic newline appending here...-->
-    <button ng-repeat="tag in post.tags">{{ tag }}</button>
-    <div ng-bind-html="post.preview">
-    </div>
-    <br>
+        <h1><a href="/articles/{{post.year}}/{{post.title}}">{{post.dispTitle}}</a></h1>
+        <p>Posted on <i>{{post.date}}</i> by <strong>{{post.author}}</strong></p>
+        <!-- Fix automatic newline appending here...-->
+        <button ng-repeat="tag in post.tags">{{ tag }}</button>
+        <div ng-bind-html="post.preview">
+        </div>
+        <a href="/articles/{{post.year}}/{{post.title}}">Read more</a>
+        <br>
+        <br>
 </div>

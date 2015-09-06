@@ -16,9 +16,4 @@ angular.module('BlogApp')
                    $scope.articles[index].preview = $sce.trustAsHtml($scope.articles[index].preview);
                });
            });
-
-        $scope.article = function (id) {
-            $http.get('/api/posts/'+id);
-        };
-
     });

@@ -7,8 +7,8 @@ angular.module('BlogApp')
     .controller('ArticleCtrl', function ($scope, $http, $routeParams, $sce) {
         console.log('inside article controller');
 
-        var id = $routeParams.id;
-        $http.get('/api/articles/title/'+id).success(function(data){
+        var title = $routeParams.title;
+        $http.get('/api/articles/title/'+title).success(function(data){
             console.log('Received: '+JSON.stringify(data));
             $scope.article = data[0];
 

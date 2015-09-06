@@ -44,4 +44,12 @@ public class ArticleCache {
         log.fine("Recent articles in cache: "+articleCache);
         return articleCache;
     }
+
+    public static synchronized int loadCache(List<Document> recent){
+        for(Document d: recent) {
+            log.info("Loading: "+d.getString("title"));
+            articleCache.add(d);
+        }
+        return articleCache.size();
+    }
 }
