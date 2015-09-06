@@ -9,10 +9,10 @@ angular.module('BlogApp')
 
 
         $scope.transform = function() {
-            console.log($scope.markdown);
+            console.log('From: (Sent) '+$scope.markdown);
             $http.post('/api/articles/transform', $scope.markdown).success(function (data) {
-                console.log('Received: ' + JSON.stringify(data));
-                $scope.html.content = $sce.trustAsHtml(data);
+                console.log('To: (Received) ' + JSON.stringify(data));
+                $scope.html.content = $sce.trustAsHtml(data.content);
             });
         };
 

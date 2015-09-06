@@ -1,0 +1,13 @@
+### Lets start!
+Blog articles API for **Script Fuzz**. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here.
+### Requirements:
+1. ``Java 8``  or higher
+2. ``MongoDB``
+3. ``Maven 3.3.1`` or higher
+
+### Usage:
+* Add **Maven** and **Java** to your ``PATH`` variable
+* Assuming you have `MongoDB` running on your system ``@port 27017`` \n* Clone this repository\n* Run: ``mvn install``
+* A fat jar will  found under the ``target`` directory
+
+![](http://i1370.photobucket.com/albums/ag268/josediaz301/xperia_tablet_z_ubuntutouch_zps59f63b33.png)

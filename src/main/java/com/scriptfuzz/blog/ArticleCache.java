@@ -25,7 +25,7 @@ public class ArticleCache {
     }
 
     public static synchronized void addToCache(Document doc){
-        log.info("Adding to cache: "+doc);
+        log.fine("Adding to cache: "+doc);
         if(articleCache.size() >= CACHE_MAX_SIZE)
         {
             log.fine("Cache size < "+CACHE_MAX_SIZE);
@@ -36,7 +36,7 @@ public class ArticleCache {
             log.fine("Cache size > "+CACHE_MAX_SIZE);
             articleCache.add(0,doc);
         }
-        articleCache.stream().forEach(a -> log.info("Adding article: "+a.get("title") +" to cache"));
+        articleCache.stream().forEach(a -> log.fine("Adding article: "+a.get("title") +" to cache"));
 
     }
 
