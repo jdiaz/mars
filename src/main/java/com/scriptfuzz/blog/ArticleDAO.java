@@ -73,13 +73,29 @@ public class ArticleDAO {
     public Document addNewMarkdownArticle(String jsonArticle){
         // Create a MongoDb document
         Document article = Document.parse(jsonArticle);
-        // Todo: use a real logger :p
         log.info("Received article: "+article.toJson());
 
         String htmlBody = parseMarkdown(article.getString("content"));
 
         article.put("content", htmlBody);
         article.put("preview", makePreview(htmlBody));
+        log.info("Verifying document before insertion: "+article.toJson());
+        articlesCollection.insertOne(article);
+        log.fine("Document inserted.");
+        return article;
+    }
+
+    /**
+     * Inserts an article represented as HTML string
+     * @param jsonArticle The HTML representation of the article
+     * @return The inserted article.
+     */
+    public Document addNewHTMLArticle(String jsonArticle){
+        Document article = Document.parse(jsonArticle);
+
+        log.info("Received article: "+article.toJson());
+
+        article.put("preview", makePreview(article.getString("content")) );
         log.info("Verifying document before insertion: "+article.toJson());
         articlesCollection.insertOne(article);
         log.fine("Document inserted.");

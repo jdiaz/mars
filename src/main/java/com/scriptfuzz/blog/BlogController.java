@@ -209,10 +209,12 @@ public class BlogController {
         });
 
         /**
-         * Add a new article.
+         * Add a new article expects the article JSON object
+         * to contain a property called 'content' with
+         * the markdown representation for your article
+         * body
          */
-        post("/api/articles/add", (req, res) -> {
-            log.info("Request: " + req);
+        post("/api/articles/markdown/add", (req, res) -> {
             String markdownArticle = req.body();
             log.fine("Markdown received: " + markdownArticle);
 
@@ -226,6 +228,35 @@ public class BlogController {
                 res.type("application/json");
                 res.body("{\"success\":true}");
             } catch (Exception e) {
+                log.severe("Error adding an article: " +e);
+                res.status(200);
+                res.type("application/json");
+                res.body("{\"success\":false}");
+            }
+            log.info("Response: " + req.body());
+            return res.body();
+        });
+
+        /**
+         * Add a new article expects the article JSON object
+         * to contain a property called 'content' with
+         * the HTML representation for your article
+         * body
+         */
+        post("/api/articles/html/add", (req, res) ->{
+            String articleStr = req.body();
+            log.fine("HTML received: " + articleStr);
+
+            log.fine("Attempting to parse HTML and add to cache");
+            try{
+                // Add to DB
+                Document articleAdded = articleDAO.addNewHTMLArticle(articleStr);
+                // Add to
+                ArticleCache.addToCache(articleAdded);
+                res.status(200);
+                res.type("application/json");
+                res.body("{\"success\":true}");
+            }catch(Exception e){
                 log.severe("Error adding an article: " +e);
                 res.status(200);
                 res.type("application/json");

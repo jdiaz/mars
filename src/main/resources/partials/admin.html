@@ -1,18 +1,49 @@
-<div id="preview">
-    <textarea id="input" rows="10" cols=120 ng-model="markdown">{{markdown}}</textarea>
-    <br>
-    <button ng-click="transform()">preview</button>
-    <br>
-    <div>
-        As HTML text:
-        <br>
-        <prev>
-            <code>{{html.content}}</code>
-        </prev>
-    </div>
-    <br>
-    HTML injected:
-    <div ng-bind-html="html.content">
-    </div>
+<div id="admin">
+    <h1>Create your article!</h1>
+
+    <div class="row">
+
+        <div class="col-lg-6">
+            <form class="form-horizontal" >
+                <div class="form-group">
+                    <label for="title" class="control-label">Title:</label>
+                    <input type="text" class="form-control" id="title" ng-model="title" />
+                </div>
+                <div class="form-group">
+                    <label for="author" class="control-label">Author: </label>
+                    <input type="text" id="author" class="form-control" ng-model="author" />
+                </div>
+                <div class="form-group">
+                    <label for="tags" class="control-label">Tags: </label>
+                    <input type="text" id="tags" class="form-control" ng-model="tags" />
+                </div>
+
+                <div class="form-group">
+                    <label for="content" class="control-label">Content:</label>
+                    <textarea id="content" rows="20" cols=120 class="form-control" ng-model="markdown">{{markdown}}</textarea>
+                </div>
+                <br>
+                <button ng-click="preview()">preview</button>
+                <button ng-click="submit()">submit</button>
+            </form>
+        </div>
+
+        <div class="col-lg-6">
+            As HTML text:
+            <br>
+            <pre id="">
+                <code>{{html.content}}</code>
+            </pre>
+            <br>
+            <br>
+            Preview:
+            <br><br>
+            <h1>{{title}}</h1>
+            <p>Posted on <i></i> by <strong>{{author}}</strong></p>
+            <button ng-repeat="tag in article.tags">{{ tag }}</button>
+            <div ng-bind-html="html.content"></div>
+        </div>
+
+    </div> <!-- row -->
 
 </div>
