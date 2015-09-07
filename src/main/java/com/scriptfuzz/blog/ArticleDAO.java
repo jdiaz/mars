@@ -1,5 +1,6 @@
 package com.scriptfuzz.blog;
 
+import com.github.rjeschke.txtmark.Configuration;
 import com.github.rjeschke.txtmark.Processor;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -102,10 +103,20 @@ public class ArticleDAO {
         return article;
     }
 
+    /**
+     * Transform the markdown to HTML
+     * @param markdown HTML string to convert to markdown
+     * @return HTML string representation of the markdown
+     */
     public String transform(String markdown){
         return parseMarkdown(markdown);
     }
 
+    /**
+     * Generates preview from html code
+     * @param html The html to generate the preview from
+     * @return First paragraph of the html content
+     */
     private static String makePreview(String html){
         String pCloseTag = "</p>";
 
@@ -121,7 +132,13 @@ public class ArticleDAO {
      */
     private static String parseMarkdown(String markdown){
         //Todo: Add the necesary logic to parse the markdown into HTML
-        String res = Processor.process(markdown);
+        Configuration.Builder c = Configuration.builder();
+        c.setCodeBlockEmitter(new CodeBlockEmitter());
+        c.setAllowSpacesInFencedCodeBlockDelimiters(true);
+        c.setEncoding("UTF-8");
+
+        System.out.printf("Configuration: "+c.toString());
+        String res = Processor.process(markdown, c.build());
         log.info("Markdown HTML equivalent: "+res);
         return res;
     }

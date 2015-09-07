@@ -1,8 +1,8 @@
 
 <h1>{{article.dispTitle}}</h1>
-<p>Posted on <i>{{article.date}}</i> by <strong>{{article.author}}</strong></p>
+<p>Posted on <i>{{article.date | date:medium}}</i> by <strong>{{article.author}}</strong></p>
 <!-- Fix automatic newline appending here...-->
-<button ng-repeat="tag in article.tags">{{ tag }}</button>
+<button class="btn btn-default"  ng-repeat="tag in article.tags" ng-disabled="true">{{ tag }}</button>
 <br>
 <br>
 <div ng-bind-html="article.content">

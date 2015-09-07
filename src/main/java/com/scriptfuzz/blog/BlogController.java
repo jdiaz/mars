@@ -43,6 +43,7 @@ public class BlogController {
        articleDAO = new ArticleDAO(blogDatabase);
 
        cfg = new FreemarkerConfiguration();
+
        // Serve the static files
        externalStaticFileLocation("src/main/resources/");
 
@@ -91,12 +92,22 @@ public class BlogController {
         //--------------------------------------------------------------//
         //                          API ROUTES                          //
         //--------------------------------------------------------------//
-        before("/", (req, res) -> {
-           try( InputStream stream = getClass().getResourceAsStream("/index.html")){
-               halt(200, IOUtils.toString(stream));
-           }catch (IOException e){
-               log.severe("Error serving index: "+e);
-           }
+        get("/", (req, res) -> {
+            try (InputStream stream = getClass().getResourceAsStream("/index.html")) {
+                halt(200, IOUtils.toString(stream));
+            } catch (IOException e) {
+                log.severe("Error serving index: " + e);
+            }
+            return 0;
+        });
+
+        // Filter to serve index.html for all application routes
+        before("/articles/*", (req, res) -> {
+            try (InputStream stream = getClass().getResourceAsStream("/index.html")) {
+                halt(200, IOUtils.toString(stream));
+            } catch (IOException e) {
+                log.severe("Error serving index: " + e);
+            }
         });
 
 
@@ -159,6 +170,7 @@ public class BlogController {
             res.body(jsonStr);
             return jsonStr;
         });
+
 
         /**
          * Find article by title
@@ -274,13 +286,11 @@ public class BlogController {
             return html.toJson();
         });
 
-
-//        get("/*", (req, res) -> {
-//            res.redirect("/");
-//            return  0;
-//        });
     }
 
+    /**
+     * Enable CORS for this server
+     */
     private void enableCORS(){
         before((req, res) -> {
             log.info("Request => host=" +req.host() + " URI="+req.uri() +" ContentType=" +req.contentType() + " IP="+req.ip() );
@@ -290,6 +300,11 @@ public class BlogController {
         });
     }
 
+    /**
+     * Extract the JSON string representation of a List<Document>
+     * @param in List of documents to convert to JSON string.
+     * @return The JSON string representation.
+     */
     private static String toJsonStr(List<Document> in){
        Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
        return gson.toJson(in);

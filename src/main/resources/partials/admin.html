@@ -39,8 +39,8 @@
             Preview:
             <br><br>
             <h1>{{title}}</h1>
-            <p>Posted on <i></i> by <strong>{{author}}</strong></p>
-            <button ng-repeat="tag in article.tags">{{ tag }}</button>
+            <p>Posted on <i>{{date | date:medium}}</i> by <strong>{{author}}</strong></p>
+            <button class="btn btn-default" ng-repeat="tag in article.tags" ng-disabled="true">{{ tag }}</button>
             <div ng-bind-html="html.content"></div>
         </div>
 
