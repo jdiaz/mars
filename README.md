@@ -1,4 +1,4 @@
-# Saturn
+# Mars
 Blog articles API for **Script Fuzz**
 
 ### Requirements:
