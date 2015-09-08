@@ -7,8 +7,6 @@ import com.mongodb.MongoClientOptions;
 import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
-import spark.ModelAndView;
-import spark.template.freemarker.FreeMarkerEngine;
 import spark.utils.IOUtils;
 
 
@@ -24,9 +22,10 @@ import static spark.Spark.*;
  * Created by J. Diaz on 08-04-15.
  */
 public class BlogController {
-    private static final int CONNECTION_POOLS = 100;
+
     public static final Logger log = Logger.getLogger(BlogController.class.getName());
-    private final FreemarkerConfiguration cfg;
+
+    private static final int CONNECTION_POOLS = 100;
     private final ArticleDAO articleDAO;
 
     //Todo: Use actual username password combo
@@ -41,8 +40,6 @@ public class BlogController {
        final MongoDatabase blogDatabase = mongoClient.getDatabase("test");
        log.info("Got database: "+blogDatabase);
        articleDAO = new ArticleDAO(blogDatabase);
-
-       cfg = new FreemarkerConfiguration();
 
        // Serve the static files
        externalStaticFileLocation("src/main/resources/");
@@ -109,12 +106,6 @@ public class BlogController {
                 log.severe("Error serving index: " + e);
             }
         });
-
-
-        /**
-         * Displays the api
-         */
-        get("/api", (req, res) -> cfg.getHtmlApi());
 
         /**
          * Upon hitting root of the page load articles
@@ -293,7 +284,7 @@ public class BlogController {
      */
     private void enableCORS(){
         before((req, res) -> {
-            log.info("Request => host=" +req.host() + " URI="+req.uri() +" ContentType=" +req.contentType() + " IP="+req.ip() );
+            log.info("Request => host=" +req.host() + " URL="+req.raw().getRequestURL() +" ContentType=" +req.contentType() + " IP="+req.ip() );
             res.header("Access-Control-Allow-Origin", "*");
             res.header("Access-Control-Allow-Methods", "X-Requested-With, Content-Type, Content-Length, Authorization");
             res.header("Access-Control-Allow-Headers", "GET,PUT,POST,DELETE,OPTIONS");

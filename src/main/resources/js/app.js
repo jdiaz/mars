@@ -7,8 +7,8 @@ angular.module('BlogApp', ['ngRoute'])
             .when('/', {
                 templateUrl: '/partials/main.html',
                 controller: 'MainCtrl'
-            }).
-            when('/articles', {
+            })
+            .when('/articles', {
                 templateUrl: '/partials/main.html',
                 controller: 'MainCtrl'
             })

@@ -16,7 +16,6 @@ public class CodeBlockEmitter implements BlockEmitter
         {
             //Utils.escapedAdd(out, l);
             out.append(l);
-            System.out.println(l);
             out.append('\n');
         }
         out.append("</pre>");
@@ -25,7 +24,7 @@ public class CodeBlockEmitter implements BlockEmitter
     @Override
     public void emitBlock(StringBuilder out, List<String> lines, String meta)
     {
-        System.out.println("Emit Block working!");
+
         if (meta.isEmpty())
         {
             append(out, lines);

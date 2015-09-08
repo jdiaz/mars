@@ -10,17 +10,33 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css" />
 
 </head>
-<body ng-app="BlogApp">
+<body ng-app="BlogApp" onload="prettyPrint()">
    <div ng-controller="MainCtrl">
 
     <div class="row">
         <div class="col-lg-2">
         </div>
         <div class="col-lg-8">
+            <ul class="nav nav-pills">
+                <li><a href="/">Home</a></li>
+                <!--li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        Dropdown <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                    </ul>
+                </li -->
+                <li><a href="/articles/admin">Admin</a></li>
+            </ul>
+            <div class="jumbotron">
+                <h1>Script Fuzz</h1>
+                <p>Welcome to Scriptfuzz's blogging app. Don't be afraid to commet, share or ask any questions about the
+                    articles published here.</p>
+            </div>
             <div ng-view></div>
         </div>
         <div class="col-lg-2">
-            <a href="/articles/admin">Admin</a>
+
         </div>
     </div>
    </div>

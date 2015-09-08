@@ -1,10 +1,4 @@
-<div class="container">
-    <h1>Script Fuzz</h1>
-    <p>Welcome to Scriptfuzz's blogging app. Don't be afraid to commet, share or ask any questions about the
-    articles published here.</p>
-</div>
-
-<div ng-repeat="post in articles">
+<div ng-repeat="post in articles" >
     <h1><a href="/articles/{{post.year}}/{{post.title}}">{{post.dispTitle}}</a></h1>
     <p>Posted on <i>{{post.date | date:medium}}</i> by <strong>{{post.author}}</strong></p>
     <!-- Fix automatic newline appending here...-->

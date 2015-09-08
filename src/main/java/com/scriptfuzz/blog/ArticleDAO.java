@@ -135,6 +135,7 @@ public class ArticleDAO {
         Configuration.Builder c = Configuration.builder();
         c.setCodeBlockEmitter(new CodeBlockEmitter());
         c.setAllowSpacesInFencedCodeBlockDelimiters(true);
+        c.forceExtentedProfile();
         c.setEncoding("UTF-8");
 
         System.out.printf("Configuration: "+c.toString());
