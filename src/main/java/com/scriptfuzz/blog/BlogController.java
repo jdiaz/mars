@@ -51,7 +51,9 @@ public class BlogController {
        bootstrapRoutes();
 
        // Load memory cache
-       loadCache();
+       Map<String,String> params = new HashMap<>();
+       params.put("year", "2015");
+       loadCache(params);
    }
 
     //Todo: Actually use credentials
@@ -75,12 +77,11 @@ public class BlogController {
      * Todo Fix the hardcoded date
      * Todo Preferably provide a range
      */
-    private void loadCache(){
+    private void loadCache(Map<String, String> params){
         log.info("Loading article memory cache");
-        Map<String,String> params = new HashMap<>();
         //Todo The year should not be hardcoded
         //Fix this crap
-        params.put("date", "2015-08-15");
+
         List<Document> recentArticles = articleDAO.findArticlesByFilter(params);
         recentArticles.stream().forEach(a -> ArticleCache.addToCache(a));
     }
@@ -284,7 +285,7 @@ public class BlogController {
      */
     private void enableCORS(){
         before((req, res) -> {
-            log.info("Request => host=" +req.host() + " URL="+req.raw().getRequestURL() +" ContentType=" +req.contentType() + " IP="+req.ip() );
+            log.info("Got request: host=" +req.host() + " URL="+req.raw().getRequestURL() +" ContentType=" +req.contentType() + " IP="+req.ip() );
             res.header("Access-Control-Allow-Origin", "*");
             res.header("Access-Control-Allow-Methods", "X-Requested-With, Content-Type, Content-Length, Authorization");
             res.header("Access-Control-Allow-Headers", "GET,PUT,POST,DELETE,OPTIONS");

@@ -1,5 +1,5 @@
 <div id="admin">
-    <h1>Write your article</h1>
+    <h1>New Article</h1>
 
     <div class="row">
 
@@ -29,19 +29,20 @@
         </div>
 
         <div class="col-lg-6">
-            As HTML text:
+            <label for="html-code">HTML text:</label>
             <br>
-            <pre id="">
+            <pre id="html-code">
                 <code>{{html.content}}</code>
             </pre>
             <br>
             <br>
-            Preview:
-            <br><br>
+            <label for="html">Preview:</label>
+            <br>
             <h1>{{title}}</h1>
             <p>Posted on <i>{{date | date:medium}}</i> by <strong>{{author}}</strong></p>
             <button class="btn btn-default" ng-repeat="tag in article.tags" ng-disabled="true">{{ tag }}</button>
-            <div ng-bind-html="html.content"></div>
+            <br>
+            <div id="html" ng-bind-html="html.content"></div>
         </div>
 
     </div> <!-- row -->

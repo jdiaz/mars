@@ -26,7 +26,7 @@ angular.module('BlogApp')
         //Submit article
             $http.post('/api/articles/html/add', $scope.article).success(function(data){
                   //Todo
-
+                alert("Successfully added article!");
             });
         };
 

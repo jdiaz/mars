@@ -60,9 +60,9 @@ public class ArticleDAO {
             filter.append(key.toString(), params.get(key));
         });
 
-        log.info("Searching with filter: "+filter.toJson());
+        log.fine("Searching with filter: "+filter.toJson());
         List<Document> result = articlesCollection.find(filter).into(new ArrayList<>());
-//        log.info("Result: "+result);
+        log.fine("Result: "+result);
 
         return result;
     }
@@ -131,14 +131,13 @@ public class ArticleDAO {
      * @return
      */
     private static String parseMarkdown(String markdown){
-        //Todo: Add the necesary logic to parse the markdown into HTML
+
         Configuration.Builder c = Configuration.builder();
         c.setCodeBlockEmitter(new CodeBlockEmitter());
         c.setAllowSpacesInFencedCodeBlockDelimiters(true);
         c.forceExtentedProfile();
         c.setEncoding("UTF-8");
 
-        System.out.printf("Configuration: "+c.toString());
         String res = Processor.process(markdown, c.build());
         log.info("Markdown HTML equivalent: "+res);
         return res;
