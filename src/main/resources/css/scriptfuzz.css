@@ -1,5 +1,11 @@
 .blog-header{
-   background-color: #428bca;
-    color: white;
-    align: right;
+    color: #428bca;
+}
+
+.blog-second{
+    color: #694C85;
+}
+
+.divider{
+    background-color: #080808;
 }
