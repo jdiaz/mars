@@ -5,43 +5,33 @@
     <meta name="description" content="" >
     <meta name="viewport" content="width=device-width">
     <title>ScriptFuzz Blog</title>
-    <!-- Latest compiled and minified CSS -->
 
     <link rel="stylesheet" href="/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/css/scriptfuzz.css">
 </head>
 <body ng-app="BlogApp">
    <div ng-controller="MainCtrl">
-
     <div class="row">
-        <div class="col-lg-2">
-        </div>
-        <div class="col-lg-8">
+
+        <div class="col-lg-offset-2 col-lg-8 col-sm-12 col-xs-12">
             <ul class="nav nav-pills">
                 <li><a href="/">Home</a></li>
-                <!--li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        Dropdown <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu" role="menu">
-                    </ul>
-                </li -->
                 <li><a href="/articles/admin">Admin</a></li>
             </ul>
 
-            <!--div class="jumbotron blog-header" -->
-            <h1 class="blog-header"><img src="/css/sf.png" height="100" width="100"><strong>Script</strong><strong class="blog-second"> Fuzz</strong></h1>
-            <!-- /div -->
+            <h1 class="blog-header">
+                <img src="/css/sf.png" height="100" width="100">
+                <strong>Script</strong>
+                <strong class="blog-second"> Fuzz</strong>:
+                <strong class="blog-project-name"> Mars</strong>
+            </h1>
             <hr class="divider">
             <br>
             <br>
             <div ng-view></div>
-        </div>
-        <div class="col-lg-2">
-
-        </div>
-    </div>
-   </div>
+        </div> <!-- end of column -->
+    </div> <!-- row -->
+   </div> <!-- controller -->
 
    <script src="/js/jquery-2.0.0.min.js" type="application/javascript"></script>
    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
@@ -55,5 +45,5 @@
    <script src="/js/controllers/main.js" type="application/javascript"></script>
    <script src="/js/controllers/article.js" type="application/javascript"></script>
    <script src="/js/controllers/admin.js" type="application/javascript"></script>
-   </body>
+</body>
 </html>
