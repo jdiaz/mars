@@ -20,13 +20,6 @@ angular.module('BlogApp', ['ngRoute'])
                 templateUrl: '/partials/article.html',
                 controller: 'ArticleCtrl'
             })
-            //.when('/login', {
-            //    templateUrl: '/partials/login.html'//,
-            //    // controller: 'LoginCtrl'
-            //})
-//      .when('/user', {
-//            templateUrl: '/partials/user.html'
-//       })
             .otherwise({
                 redirectTo: '/'
             });
