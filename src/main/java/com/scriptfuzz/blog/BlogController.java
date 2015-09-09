@@ -30,7 +30,7 @@ public class BlogController {
 
     //Todo: Use actual username password combo
     // Right now is being ignored
-   public BlogController(String username, String password, String host, int port){
+   public BlogController(String username, String password, String host, int port, String mode){
        log.info("Server running on port: "+port);
        MongoClientOptions options = MongoClientOptions.builder().connectionsPerHost(CONNECTION_POOLS).build();
 
@@ -42,7 +42,11 @@ public class BlogController {
        articleDAO = new ArticleDAO(blogDatabase);
 
        // Serve the static files
-       externalStaticFileLocation("src/main/resources/");
+       if("production".equals(mode))
+       {
+           staticFileLocation("/public");
+       }else externalStaticFileLocation("src/main/resources/public/");
+
 
        // Enable CORS
        enableCORS();
@@ -64,11 +68,11 @@ public class BlogController {
         if("production".equalsIgnoreCase(mode)) {
             String username = "Thatguy";
             String password = "thisguy";
-            new BlogController(username, password, "localhost", 3000);
+            new BlogController(username, password, "localhost", 27017, mode);
         }else{
             String username = "Thatguy";
             String password = "thisguy";
-            new BlogController(username, password, "localhost", 27017);
+            new BlogController(username, password, "localhost", 27017, mode);
         }
     }
 
@@ -91,7 +95,7 @@ public class BlogController {
         //                          API ROUTES                          //
         //--------------------------------------------------------------//
         get("/", (req, res) -> {
-            try (InputStream stream = getClass().getResourceAsStream("/index.html")) {
+            try (InputStream stream = getClass().getResourceAsStream("/public/index.html")) {
                 halt(200, IOUtils.toString(stream));
             } catch (IOException e) {
                 log.severe("Error serving index: " + e);
@@ -101,7 +105,7 @@ public class BlogController {
 
         // Filter to serve index.html for all application routes
         before("/articles/*", (req, res) -> {
-            try (InputStream stream = getClass().getResourceAsStream("/index.html")) {
+            try (InputStream stream = getClass().getResourceAsStream("/public/index.html")) {
                 halt(200, IOUtils.toString(stream));
             } catch (IOException e) {
                 log.severe("Error serving index: " + e);
