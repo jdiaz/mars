@@ -1,0 +1,27 @@
+<div class="row">
+<h1 class="bLog-header">{{article.dispTitle}}</h1>
+<p>Posted on <i>{{article.date | date:medium}}</i> by <strong>{{article.author}}</strong></p>
+<!-- Fix automatic newline appending here...-->
+<button class="btn btn-default"  ng-repeat="tag in article.tags" ng-disabled="true">{{ tag }}</button>
+<br>
+<br>
+<div ng-bind-html="article.content">
+</div>
+<br>
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = 'scriptfuzz';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the
+    <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+</div>

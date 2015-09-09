@@ -1,0 +1,49 @@
+<!DOCTYPE>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="" >
+    <meta name="viewport" content="width=device-width">
+    <title>ScriptFuzz Blog</title>
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/scriptfuzz.css">
+</head>
+<body ng-app="BlogApp">
+   <div ng-controller="MainCtrl">
+    <div class="container-fluid">
+
+        <div class="col-lg-offset-2 col-lg-8 col-sm-12 col-xs-12">
+            <ul class="nav nav-pills">
+                <li><a href="/">Home</a></li>
+                <li><a href="/articles/admin">Admin</a></li>
+            </ul>
+
+            <h1 class="blog-header">
+                <img src="/css/sf.png" height="100" width="100">
+                <strong>Script</strong>
+                <strong class="blog-second"> Fuzz</strong>:
+                <strong class="blog-project-name"> Mars</strong>
+            </h1>
+            <hr class="divider">
+            <br>
+            <br>
+            <div ng-view></div>
+        </div> <!-- end of column -->
+    </div> <!-- row -->
+   </div> <!-- controller -->
+
+   <script src="/js/jquery-2.0.0.min.js" type="application/javascript"></script>
+   <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+
+   <script src="/js/angular.min.js" type="application/javascript"></script>
+   <script src="/js/angular-sanitize.min.js" type="application/javascript"></script>
+   <script src="/js/angular-route.js" type="application/javascript"></script>
+   <script src="/js/angular-resource.min.js" type="application/javascript"></script>
+
+   <script src="/js/app.js" type="application/javascript"></script>
+   <script src="/js/controllers/main.js" type="application/javascript"></script>
+   <script src="/js/controllers/article.js" type="application/javascript"></script>
+   <script src="/js/controllers/admin.js" type="application/javascript"></script>
+</body>
+</html>

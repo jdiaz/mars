@@ -1,0 +1,13 @@
+{
+  "title": "A-blog-post",
+  "author": "J. Diaz",
+  "content": "### Lets start!\nBlog articles API for **Script Fuzz**. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here.\n###Requirements:\n1. ``Java 8``  or higher \n2. ``MongoDB`` \n3. ``Maven 3.3.1`` or higher \n\n### Usage:\n* Add **Maven** and **Java** to your ``PATH`` variable\n* Assuming you have `MongoDB` running on your system ``@port 27017`` \n* Clone this repository\n* Run: ``mvn install`` \n* A fat jar will  found under the ``target`` directory \n![](http://i1370.photobucket.com/albums/ag268/josediaz301/xperia_tablet_z_ubuntutouch_zps59f63b33.png)",
+  "date": "2015-08-15",
+  "tags": [
+    "Java",
+    "JSON",
+    "tech",
+    "blog"
+  ],
+  "year": 2015
+}
