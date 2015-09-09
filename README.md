@@ -12,3 +12,6 @@ Blog articles API for **Script Fuzz**
 * Clone this repository
 * Run: ```./deploy.sh```
 * A fat jar will be found under the ```target``` directory
+
+### Preview:
+![](http://i1370.photobucket.com/albums/ag268/josediaz301/mars_zpsaurru6cf.png)
