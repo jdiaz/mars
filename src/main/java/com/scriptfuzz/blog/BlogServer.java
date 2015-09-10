@@ -21,16 +21,16 @@ import static spark.Spark.*;
 /**
  * Created by J. Diaz on 08-04-15.
  */
-public class BlogController {
+public class BlogServer {
 
-    public static final Logger log = Logger.getLogger(BlogController.class.getName());
+    public static final Logger log = Logger.getLogger(BlogServer.class.getName());
 
     private static final int CONNECTION_POOLS = 100;
     private final ArticleDAO articleDAO;
 
     //Todo: Use actual username password combo
     // Right now is being ignored
-   public BlogController(String username, String password, String host, int port, String mode){
+   public BlogServer(String username, String password, String host, int port, String mode){
        log.info("Server running on port: "+port);
        MongoClientOptions options = MongoClientOptions.builder().connectionsPerHost(CONNECTION_POOLS).build();
 
@@ -68,11 +68,11 @@ public class BlogController {
         if("production".equalsIgnoreCase(mode)) {
             String username = "Thatguy";
             String password = "thisguy";
-            new BlogController(username, password, "localhost", 27017, mode);
+            new BlogServer(username, password, "localhost", 27017, mode);
         }else{
             String username = "Thatguy";
             String password = "thisguy";
-            new BlogController(username, password, "localhost", 27017, mode);
+            new BlogServer(username, password, "localhost", 27017, mode);
         }
     }
 

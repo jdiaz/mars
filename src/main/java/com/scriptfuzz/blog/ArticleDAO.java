@@ -2,6 +2,7 @@ package com.scriptfuzz.blog;
 
 import com.github.rjeschke.txtmark.Configuration;
 import com.github.rjeschke.txtmark.Processor;
+import com.mongodb.DBCursor;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
@@ -30,9 +31,9 @@ public class ArticleDAO {
      * @return JSON string representation of all articles
      */
     public List<Document> findAllArticles(){
-
         Document filter = new Document(); // I will populate
         filter.append("_id", false);
+
         log.fine("Filter: "+filter);
         List<Document> all = articlesCollection.find().into(new ArrayList<>());
         log.info("Returning this from DAO: "+all);
