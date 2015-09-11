@@ -291,6 +291,8 @@ public class BlogServer {
      */
     private void enableCORS(){
         before((req, res) -> {
+            // Do not log css & js requests
+            if(!(req.uri().contains("/js/") || req.uri().contains("/css/")))
             log.info("Got request: host=" +req.host() + " URL="+req.raw().getRequestURL() +" ContentType=" +req.contentType() + " IP="+req.ip() );
             res.header("Access-Control-Allow-Origin", "*");
             res.header("Access-Control-Allow-Methods", "X-Requested-With, Content-Type, Content-Length, Authorization");
