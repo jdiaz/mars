@@ -119,12 +119,14 @@ public class BlogServer {
          * Todo Decide what this will return
          */
         get("/api/cache/load/:year", (req, res) -> {
-            String y = req.params(":year");
+            String y = req.params("year");
+            log.info(y);
             Map<String,String> params = new HashMap<>();
             params.put("year", y);
             List<Document> recent = articleDAO.findArticlesByFilter(params);
+            log.info("loading from /api/cache/load/"+y +" total of: "+recent.size());
             int count = ArticleCache.loadCache(recent);
-            log.info("Loaded " + count + " articles from cache");
+            log.info("Loaded " + count + " articles from db to cache");
             return count;
         });
 
@@ -247,7 +249,7 @@ public class BlogServer {
 
         /**
          * Add a new article expects the article JSON object
-         * to contain a property called 'content' with
+         * to contain a property called 'htmlContent' with
          * the HTML representation for your article
          * body
          */

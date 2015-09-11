@@ -4,13 +4,15 @@ angular.module('BlogApp')
         console.log('inside admin controller');
         $scope.html = {};
 
-        $scope.article = {title: '', author: '', content: '', tags: [], preview: ''};
+        $scope.article = {title: '', author: '', htmlContent: '', markdownContent: '',tags: [], preview: ''};
         $scope.preview = function() {
-            console.log('From: (Sent) '+$scope.markdown);
-            $http.post('/api/articles/transform', $scope.markdown).success(function (data) {
+            console.log('From: (Sent) '+$scope.markdownBox);
+
+            $scope.article.markdownContent = $scope.markdownBox;
+            $http.post('/api/articles/transform', $scope.markdownBox).success(function (data) {
                 console.log('To: (Received) ' + JSON.stringify(data));
                 $scope.html.content = $sce.trustAsHtml(data.content);
-                $scope.article.content = data.content;
+                $scope.article.htmlContent = data.content;
             });
 
             $scope.article.title = $scope.title.replace(/\s/g,'-');
@@ -27,6 +29,26 @@ angular.module('BlogApp')
             $http.post('/api/articles/html/add', $scope.article).success(function(data){
                   //Todo
                 alert("Successfully added article!");
+            });
+        };
+
+        $scope.search = function(){
+            console.log('searching by title!!!!!');
+
+            $http.get('/api/articles/title/' +$scope.title.replace(/\s/g,'-') ).success(function (data) {
+                console.log('searchByTitle result => ' + JSON.stringify(data));
+                $scope.author = data[0].author;
+                $scope.markdownBox = data[0].markdownContent;
+                var tagz = data[0].tags;
+                $scope.tags = '';
+                tagz.forEach(function(curr, index, arr){
+                    if(index === 0)
+                    $scope.tags += curr;
+                    else $scope.tags += ' '+curr;
+                });
+
+                //$scope.html.content = $sce.trustAsHtml(data.content);
+                //$scope.article.content = data.content;
             });
         };
 

@@ -14,7 +14,7 @@ angular.module('BlogApp')
 
             $scope.article.dispTitle = data[0].title.replace(/-/g,' ');
 
-            $scope.article.content = $sce.trustAsHtml(data[0].content);
+            $scope.article.htmlContent = $sce.trustAsHtml(data[0].htmlContent);
 
             console.log('retrieved this data: %j', $scope.article);
         });

@@ -97,9 +97,22 @@ public class ArticleDAO {
 
         log.info("Received article: "+article.toJson());
 
-        article.put("preview", makePreview(article.getString("content")) );
+        article.put("preview", makePreview(article.getString("htmlContent")) );
         log.info("Verifying document before insertion: "+article.toJson());
-        articlesCollection.insertOne(article);
+
+        Document filter = new Document("title", article.getString("title"));
+
+        Document existingArticle = articlesCollection.find(filter).first();
+        if(existingArticle == null){
+            log.info("Did not find an article with title: "+article.getString("title"));
+            // adding to db
+            articlesCollection.insertOne(article);
+        } else {
+            log.info("Found an article with title: "+existingArticle.getString("title"));
+            // replacing the article in db
+            articlesCollection.replaceOne(filter, article);
+        }
+
         log.fine("Document inserted.");
         return article;
     }
