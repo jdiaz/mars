@@ -1,1 +1,1 @@
-mongoimport --db test --collection articles --type json --file articles.json --jsonArray
+mongoimport --db test --collection articles --type json --file seed.json --jsonArray
