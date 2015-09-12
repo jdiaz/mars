@@ -15,10 +15,13 @@ import java.util.stream.Collectors;
  */
 public class ArticleCache {
 
-    public static final int CACHE_MAX_SIZE = 5;
+    public static final int CACHE_MAX_SIZE = 15;
     public static final Logger log = Logger.getLogger(ArticleCache.class.getName());
     private static volatile List<Document> articleCache = new ArrayList<>();
 
+    /**
+     * Clears List<Document> cache
+     */
     public static synchronized void clearCache(){
         // Help garbage collector
         log.info("Clearing cache");
@@ -26,6 +29,11 @@ public class ArticleCache {
         articleCache = new ArrayList<>();
     }
 
+    /**
+     * Add a new document to the memory cache
+     * However, it checks to see if its already in the list. If so,
+     * it replaces it.
+     */
     public static synchronized void addToCache(Document doc) {
         log.fine("Adding to cache: " + doc);
         String title = doc.getString("title");
@@ -57,11 +65,20 @@ public class ArticleCache {
         } //end else
     } // end addToCache
 
+    /**
+     * Retrieves the article list
+     * @return
+     */
     public static synchronized List<Document> getRecentArticles(){
         log.fine("Recent articles in cache: "+articleCache);
         return articleCache;
     }
 
+    /**
+     * Populates the in memory list.
+     * @param recent List of Documents to insert.
+     * @return The number of documents inserted to the memory cache.
+     */
     public static synchronized int loadCache(List<Document> recent){
         for(Document d: recent) {
             log.info("Loading: "+d.getString("title"));
