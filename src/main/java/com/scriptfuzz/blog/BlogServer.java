@@ -26,7 +26,9 @@ public class BlogServer {
 
     public static final Logger log = Logger.getLogger(BlogServer.class.getName());
 
+    private static final String API_CONTEXT = "/api/";
     private static final int CONNECTION_POOLS = 100;
+
     private final ArticleDAO articleDAO;
 
     //Todo: Use actual username password combo
@@ -47,7 +49,6 @@ public class BlogServer {
        {
            staticFileLocation("/public");
        }else externalStaticFileLocation("src/main/resources/public/");
-
 
        // Enable CORS
        enableCORS();
@@ -113,13 +114,24 @@ public class BlogServer {
             }
         });
 
+        // Secure the api routes
+        before(API_CONTEXT +"*", (req, res) -> {
+            boolean authorized = true;
+            if(!authorized) {
+                halt(401);
+                res.redirect("/");
+                System.out.println("Not authorized access");
+            }
+            System.out.println("Authorized access");
+        });
+
         /**
          * Upon hitting root of the page load articles
          * from memory cache instead of going to DB
          * Get recent articles
          * Todo Decide what this will return
          */
-        get("/api/cache/load/:year", (req, res) -> {
+        get(API_CONTEXT+ "/cache/load/:year", (req, res) -> {
             String y = req.params("year");
             Map<String,Object> params = new HashMap<>();
             params.put("year", Integer.parseInt(y));
@@ -136,12 +148,12 @@ public class BlogServer {
          * Test out clearing the cache
          * Fix this crap
          */
-        get("/api/cache/clear", (req, res) -> {
+        get(API_CONTEXT + "cache/clear", (req, res) -> {
             ArticleCache.clearCache();
             return "ArticleCache cleared!";
         });
 
-        get("/api/articles/recent", (req, res) -> {
+        get(API_CONTEXT + "articles/recent", (req, res) -> {
             String jsonStr = fromListToJsonStr(ArticleCache.getRecentArticles());
             setResponseMeta(res, "application/json", 200, jsonStr);
             return res.body();
@@ -150,7 +162,7 @@ public class BlogServer {
         /**
          * Returns all articles in db
          */
-        get("/api/articles/all", (req, res) -> {
+        get(API_CONTEXT + "articles/all", (req, res) -> {
             String jsonStr = fromListToJsonStr(articleDAO.findAllArticles());
             setResponseMeta(res, "application/json", 200, jsonStr);
             return res.body();
@@ -159,7 +171,7 @@ public class BlogServer {
         /**
          * Returns all articles by year
          */
-        get("/api/articles/year/:year", (req, res) -> {
+        get(API_CONTEXT + "articles/year/:year", (req, res) -> {
             String year = req.params("year");
             Map<String,Object> params = new HashMap<>();
 
@@ -173,7 +185,7 @@ public class BlogServer {
         /**
          * Find article by title
          */
-        get("/api/articles/title/:title", (req, res) -> {
+        get(API_CONTEXT + "articles/title/:title", (req, res) -> {
             String title = req.params("title");
             Map<String,Object> params = new HashMap<>();
             params.put("title", title);
@@ -187,7 +199,7 @@ public class BlogServer {
         /**
          * Find article by author
          */
-        get("/api/articles/author/:author", (req, res) -> {
+        get(API_CONTEXT + "articles/author/:author", (req, res) -> {
             String author = req.params("author");
             Map<String,Object> params = new HashMap<>();
             params.put("author", author);
@@ -197,7 +209,7 @@ public class BlogServer {
             return res.body();
         });
 
-        get("/api/articles/:year/:title", (req, res) -> {
+        get(API_CONTEXT + "articles/:year/:title", (req, res) -> {
             String year = req.params(":year");
             String title = req.params(":title");
 
@@ -216,7 +228,7 @@ public class BlogServer {
          * the markdown representation for your article
          * body
          */
-        post("/api/articles/markdown/add", (req, res) -> {
+        post(API_CONTEXT + "articles/markdown/add", (req, res) -> {
             String markdownArticle = req.body();
             log.fine("Markdown received: " + markdownArticle);
 
@@ -226,14 +238,12 @@ public class BlogServer {
                 Document articleAdded = articleDAO.addNewMarkdownArticle(markdownArticle);
                 // Add to
                 ArticleCache.addToCache(articleAdded);
-                res.status(200);
-                res.type("application/json");
-                res.body("{\"success\":true}");
+                String jsonStr = "{\"success\":true}";
+                setResponseMeta(res, "application/json", 200, jsonStr);
             } catch (Exception e) {
                 log.severe("Error adding an article: " +e);
-                res.status(200);
-                res.type("application/json");
-                res.body("{\"success\":false}");
+                String jsonStr = "{\"success\":false}";
+                setResponseMeta(res, "application/json", 200, jsonStr);
             }
             log.info("Response: " + req.body());
             return res.body();
@@ -245,7 +255,7 @@ public class BlogServer {
          * the HTML representation for your article
          * body
          */
-        post("/api/articles/html/add", (req, res) ->{
+        post(API_CONTEXT + "articles/html/add", (req, res) ->{
             String articleStr = req.body();
             log.fine("HTML received: " + articleStr);
 
@@ -266,7 +276,7 @@ public class BlogServer {
             return res.body();
         });
 
-        post("/api/articles/transform", (req, res) -> {
+        post(API_CONTEXT + "articles/transform", (req, res) -> {
             String markdown = req.body();
             String transformed = articleDAO.transform(markdown);
             Document html = new Document();

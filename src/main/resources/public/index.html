@@ -16,7 +16,7 @@
         <div class="col-lg-offset-2 col-lg-8 col-sm-12 col-xs-12">
             <ul class="nav nav-pills">
                 <li><a href="/">Home</a></li>
-                <li><a href="/articles/admin">Admin</a></li>
+                <li ng-show="canAccess('/articles/admin')"><a href="/articles/admin">Admin</a></li>
             </ul>
 
             <h1 class="blog-header">
@@ -34,16 +34,25 @@
    </div> <!-- controller -->
 
    <script src="/js/jquery-2.0.0.min.js" type="application/javascript"></script>
-   <script src="/js/bootstrap.min.js" type="application/javascript"></script>
 
    <script src="/js/angular.min.js" type="application/javascript"></script>
-   <script src="/js/angular-sanitize.min.js" type="application/javascript"></script>
+   <script src="/js/bootstrap.min.js" type="application/javascript"></script>
    <script src="/js/angular-route.js" type="application/javascript"></script>
+   <script src="/js/angular-sanitize.min.js" type="application/javascript"></script>
+
    <script src="/js/angular-resource.min.js" type="application/javascript"></script>
 
    <script src="/js/app.js" type="application/javascript"></script>
+   <script src="/js/filters.js" type="application/javascript"></script>
+
    <script src="/js/controllers/main.js" type="application/javascript"></script>
+   <script src="/js/services/auth.js" type="application/javascript"></script>
+   <script src="/js/services/application.js" type="application/javascript"></script>
+   <script src="/js/services/routefilter.js" type="application/javascript"></script>
+
+   <script src="/js/controllers/loading.js" type="application/javascript"></script>
    <script src="/js/controllers/article.js" type="application/javascript"></script>
    <script src="/js/controllers/admin.js" type="application/javascript"></script>
+
 </body>
 </html>

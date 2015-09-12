@@ -2,7 +2,6 @@ package com.scriptfuzz.blog;
 
 import com.github.rjeschke.txtmark.Configuration;
 import com.github.rjeschke.txtmark.Processor;
-import com.mongodb.DBCursor;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;

@@ -4,8 +4,14 @@
 'use strict';
 
 angular.module('BlogApp')
-    .controller('MainCtrl', function ($scope, $sce, $http) {
+    .controller('MainCtrl', function ($scope, $sce, $http, Authentication, RouteFilter) {
         console.log('inside controller');
+
+        $scope.canAccess = function(route){
+            return RouteFilter.canAccess(route);
+        }
+
+        console.log(Authentication.getUser());
 
         $http.get('/api/articles/recent').success(function (data) {
                $scope.articles = data;
