@@ -7,6 +7,7 @@ import com.mongodb.MongoClientOptions;
 import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
+import spark.Response;
 import spark.utils.IOUtils;
 
 
@@ -55,8 +56,8 @@ public class BlogServer {
        bootstrapRoutes();
 
        // Load memory cache
-       Map<String,String> params = new HashMap<>();
-       params.put("year", "2015");
+       Map<String,Object> params = new HashMap<>();
+       params.put("year", 2015);
        loadCache(params);
    }
 
@@ -81,7 +82,7 @@ public class BlogServer {
      * Todo Fix the hardcoded date
      * Todo Preferably provide a range
      */
-    private void loadCache(Map<String, String> params){
+    private void loadCache(Map<String, Object> params){
         log.info("Loading article memory cache");
         //Todo The year should not be hardcoded
         //Fix this crap
@@ -120,10 +121,11 @@ public class BlogServer {
          */
         get("/api/cache/load/:year", (req, res) -> {
             String y = req.params("year");
-            log.info(y);
-            Map<String,String> params = new HashMap<>();
-            params.put("year", y);
+            Map<String,Object> params = new HashMap<>();
+            params.put("year", Integer.parseInt(y));
+
             List<Document> recent = articleDAO.findArticlesByFilter(params);
+
             log.info("loading from /api/cache/load/"+y +" total of: "+recent.size());
             int count = ArticleCache.loadCache(recent);
             log.info("Loaded " + count + " articles from db to cache");
@@ -139,18 +141,19 @@ public class BlogServer {
             return "ArticleCache cleared!";
         });
 
-        get("/api/articles/recent", (req, res) -> toJsonStr(ArticleCache.getRecentArticles()));
+        get("/api/articles/recent", (req, res) -> {
+            String jsonStr = fromListToJsonStr(ArticleCache.getRecentArticles());
+            setResponseMeta(res, "application/json", 200, jsonStr);
+            return res.body();
+        });
 
         /**
          * Returns all articles in db
          */
         get("/api/articles/all", (req, res) -> {
-            String jsonStr = toJsonStr(articleDAO.findAllArticles());
-            log.info("Response: " + jsonStr);
-            res.status(200);
-            res.type("application/json");
-            res.body(jsonStr);
-            return jsonStr;
+            String jsonStr = fromListToJsonStr(articleDAO.findAllArticles());
+            setResponseMeta(res, "application/json", 200, jsonStr);
+            return res.body();
         });
 
         /**
@@ -158,15 +161,12 @@ public class BlogServer {
          */
         get("/api/articles/year/:year", (req, res) -> {
             String year = req.params("year");
-            Map params = new HashMap<String, String>();
+            Map<String,Object> params = new HashMap<>();
 
-            params.put("year", year);
-            String jsonStr = toJsonStr(articleDAO.findArticlesByFilter(params));
-            log.info("Response: " + jsonStr);
-            res.status(200);
-            res.type("application/json");
-            res.body(jsonStr);
-            return jsonStr;
+            params.put("year", Integer.parseInt(year) );
+            String jsonStr = fromListToJsonStr(articleDAO.findArticlesByFilter(params));
+            setResponseMeta(res, "application/json", 200, jsonStr);
+            return res.body();
         });
 
 
@@ -175,47 +175,39 @@ public class BlogServer {
          */
         get("/api/articles/title/:title", (req, res) -> {
             String title = req.params("title");
-            Map params = new HashMap<String, String>();
+            Map<String,Object> params = new HashMap<>();
             params.put("title", title);
 
-            String jsonStr = toJsonStr(articleDAO.findArticlesByFilter(params));
-            log.info("Response: " + jsonStr);
-            res.status(200);
-            res.type("application/json");
-            res.body(jsonStr);
-            return jsonStr;
+            String jsonStr = fromListToJsonStr(articleDAO.findArticlesByFilter(params));
+            setResponseMeta(res, "application/json", 200, jsonStr);
+            return res.body();
         });
+
 
         /**
          * Find article by author
          */
         get("/api/articles/author/:author", (req, res) -> {
             String author = req.params("author");
-            Map params = new HashMap<String, String>();
+            Map<String,Object> params = new HashMap<>();
             params.put("author", author);
 
-            String jsonStr = toJsonStr(articleDAO.findArticlesByFilter(params));
-            log.info("Response: " + jsonStr);
-            res.status(200);
-            res.type("application/json");
-            res.body(jsonStr);
-            return res;
+            String jsonStr = fromListToJsonStr(articleDAO.findArticlesByFilter(params));
+            setResponseMeta(res, "application/json", 200, jsonStr);
+            return res.body();
         });
 
         get("/api/articles/:year/:title", (req, res) -> {
             String year = req.params(":year");
             String title = req.params(":title");
 
-            Map<String, String> params = new HashMap<>();
-
-            params.put("year", year);
+            Map<String,Object> params = new HashMap<>();
+            params.put("year", Integer.parseInt(year));
             params.put("title", title);
-            String jsonStr = toJsonStr(articleDAO.findArticlesByFilter(params));
-            log.info("Response: " + jsonStr);
-            res.status(200);
-            res.type("application/json");
-            res.body(jsonStr);
-            return jsonStr;
+
+            String jsonStr = fromListToJsonStr(articleDAO.findArticlesByFilter(params));
+            setResponseMeta(res, "application/json", 200, jsonStr);
+            return res.body();
         });
 
         /**
@@ -263,14 +255,12 @@ public class BlogServer {
                 Document articleAdded = articleDAO.addNewHTMLArticle(articleStr);
                 // Add to
                 ArticleCache.addToCache(articleAdded);
-                res.status(200);
-                res.type("application/json");
-                res.body("{\"success\":true}");
+                String jsonStr = "{\"success\":true}";
+                setResponseMeta(res, "application/json", 200, jsonStr);
             }catch(Exception e){
                 log.severe("Error adding an article: " +e);
-                res.status(200);
-                res.type("application/json");
-                res.body("{\"success\":false}");
+                String jsonStr = "{\"success\":false}";
+                setResponseMeta(res, "application/json", 200, jsonStr);
             }
             log.info("Response: " + req.body());
             return res.body();
@@ -281,7 +271,9 @@ public class BlogServer {
             String transformed = articleDAO.transform(markdown);
             Document html = new Document();
             html.append("content", transformed);
-            return html.toJson();
+
+            setResponseMeta(res,"application/json",200, html.toJson());
+            return res.body();
         });
 
     }
@@ -305,8 +297,22 @@ public class BlogServer {
      * @param in List of documents to convert to JSON string.
      * @return The JSON string representation.
      */
-    private static String toJsonStr(List<Document> in){
+    private static String fromListToJsonStr(List<Document> in){
        Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
        return gson.toJson(in);
+    }
+
+    /**
+     * Sets HTTP Response meta data
+     * @param res The response being sent
+     * @param contentType The content type of the result
+     * @param code The HTTP status code
+     * @param body The body of the response
+     */
+    private static void setResponseMeta(Response res, String contentType, int code, String body){
+        log.info("Response: " + body);
+        res.status(code);
+        res.type(contentType);
+        res.body(body);
     }
 }
