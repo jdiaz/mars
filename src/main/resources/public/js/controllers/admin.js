@@ -10,9 +10,10 @@ angular.module('BlogApp')
 
             $scope.article.markdownContent = $scope.markdownBox;
             $http.post('/api/articles/transform', $scope.markdownBox).success(function (data) {
-                console.log('To: (Received) ' + JSON.stringify(data));
-                $scope.html.content = $sce.trustAsHtml(data.content);
-                $scope.article.htmlContent = data.content;
+                console.log('To: (Received) ' + JSON.stringify(data))
+
+                $scope.html.content = $sce.trustAsHtml(data.content.trim());
+                $scope.article.htmlContent = data.content.trim();
             });
 
             $scope.article.title = $scope.title.replace(/\s/g,'-');
@@ -22,15 +23,18 @@ angular.module('BlogApp')
             $scope.article.year = $scope.article.date.getFullYear();
             console.log($scope.article);
 
-        };
+        };// end $scope.article
 
         $scope.submit = function(){
         //Submit article
             $http.post('/api/articles/html/add', $scope.article).success(function(data){
                   //Todo
                 alert("Successfully added article!");
+            })
+            .error(function(data){
+                alert("Error adding article: "+data);
             });
-        };
+        };// end $scope.submit
 
         $scope.search = function(){
             console.log('searching by title!!!!!');
@@ -47,9 +51,7 @@ angular.module('BlogApp')
                     else $scope.tags += ' '+curr;
                 });
 
-                //$scope.html.content = $sce.trustAsHtml(data.content);
-                //$scope.article.content = data.content;
             });
-        };
+        }; // end $scope.search
 
     });

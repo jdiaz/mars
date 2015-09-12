@@ -49,7 +49,7 @@ public class ArticleDAO {
      * @param params The parameters to which match the article to
      * @return JSON string representation of the article matching the parameters
      */
-    public List<Document> findArticlesByFilter(Map<String, String> params){
+    public List<Document> findArticlesByFilter(Map<String, Object> params){
 
         // Create a MongoDB filter.
         Document filter = new Document();

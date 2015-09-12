@@ -26,14 +26,13 @@
                                 <br>
 
                                 <button type="" class="btn btn-primary" ng-click="search()">Find</button>
-                                <button type="button" class="btn btn-primary" ng-click="preview()">Preview</button>
-                                <button type="button" class="btn btn-success" ng-click="submit()">Submit</button>
+                                <button type="" class="btn btn-primary" ng-click="preview()">Prepare</button>
+                                <button type="" class="btn btn-success" ng-click="submit()">Submit</button>
                             </form>
                         </div>
 
                         <div class="col-lg-6">
                             <label for="html-code">HTML text:</label>
-                            <br>
                             <pre id="html-code">
                                 <code>{{html.content}}</code>
                             </pre>
@@ -49,49 +48,50 @@
                         </div>
                     </div> <!-- row lg-col -->
 
-                    <div class="hidden-lg hidden-md">
+                    <!--<div class="hidden-lg hidden-md">-->
 
-                        <form class="form-horizontal" >
-                            <div class="form-group">
-                                <label for="title" class="control-label">Title:</label>
-                                <input type="text" class="form-control" id="title" ng-model="title" />
-                                <button type="button" class="btn btn-primary" ng-click="searchByTitle()">Lookup</button>
-                            </div>
-                            <div class="form-group">
-                                <label for="author" class="control-label">Author: </label>
-                                <input type="text" id="author" class="form-control" ng-model="author" />
-                            </div>
-                            <div class="form-group">
-                                <label for="tags" class="control-label">Tags: </label>
-                                <input type="text" id="tags" class="form-control" ng-model="tags" />
-                            </div>
+                        <!--<form class="form-horizontal" >-->
+                            <!--<div class="form-group">-->
+                                <!--<label for="title" class="control-label">Title:</label>-->
+                                <!--<input type="text" class="form-control" id="title" ng-model="title" />-->
 
-                            <div class="form-group">
-                                <label for="content" class="control-label">Content:</label>
-                                <textarea id="content" rows="20" cols=120 class="form-control" ng-model="markdown">{{markdown}}</textarea>
-                            </div>
-                            <br>
-                            <button type="button" class="btn btn-primary" ng-click="preview()">Preview</button>
-                            <button type="button" class="btn btn-success" ng-click="submit()">Submit</button>
-                        </form>
-                    </div>
+                            <!--</div>-->
+                            <!--<div class="form-group">-->
+                                <!--<label for="author" class="control-label">Author: </label>-->
+                                <!--<input type="text" id="author" class="form-control" ng-model="author" />-->
+                            <!--</div>-->
+                            <!--<div class="form-group">-->
+                                <!--<label for="tags" class="control-label">Tags: </label>-->
+                                <!--<input type="text" id="tags" class="form-control" ng-model="tags" />-->
+                            <!--</div>-->
 
-                    <div class="row hidden-lg hidden-md">
-                        <label for="html-code">HTML text:</label>
-                        <br>
-                        <pre id="html-code">
-                            <code>{{html.content}}</code>
-                        </pre>
-                        <br>
-                        <br>
-                        <label for="html">Preview:</label>
-                        <br>
-                        <h1>{{title}}</h1>
-                        <p>Posted on <i>{{date | date:medium}}</i> by <strong>{{author}}</strong></p>
-                        <button class="btn btn-default" ng-repeat="tag in article.tags" ng-disabled="true">{{ tag }}</button>
-                        <br>
-                        <div id="html" ng-bind-html="html.content"></div>
-                    </div>
+                            <!--<div class="form-group">-->
+                                <!--<label for="content" class="control-label">Content:</label>-->
+                                <!--<textarea id="content" rows="20" cols=120 class="form-control" ng-model="markdownBox">{{markdownBox}}</textarea>-->
+                            <!--</div>-->
+                            <!--<br>-->
+                            <!--<button type="" class="btn btn-primary" ng-click="searchByTitle()">Find</button>-->
+                            <!--<button type="" class="btn btn-primary" ng-click="preview()">Prepare</button>-->
+                            <!--<button type="" class="btn btn-success" ng-click="submit()">Submit</button>-->
+                        <!--</form>-->
+                    <!--</div>-->
+
+                    <!--<div class="row hidden-lg hidden-md">-->
+                        <!--<label for="html-code">HTML text:</label>-->
+                        <!--<br>-->
+                        <!--<pre id="html-code">-->
+                            <!--<code>{{html.content}}</code>-->
+                        <!--</pre>-->
+                        <!--<br>-->
+                        <!--<br>-->
+                        <!--<label for="html">Preview:</label>-->
+                        <!--<br>-->
+                        <!--<h1>{{title}}</h1>-->
+                        <!--<p>Posted on <i>{{date | date:medium}}</i> by <strong>{{author}}</strong></p>-->
+                        <!--<button class="btn btn-default" ng-repeat="tag in article.tags" ng-disabled="true">{{ tag }}</button>-->
+                        <!--<br>-->
+                        <!--<div id="html" ng-bind-html="html.content"></div>-->
+                    <!--</div>-->
 
                  </div> <!-- new article -->
 

@@ -26,35 +26,36 @@ public class ArticleCache {
         articleCache = new ArrayList<>();
     }
 
-    public static synchronized void addToCache(Document doc){
-        log.fine("Adding to cache: "+doc);
+    public static synchronized void addToCache(Document doc) {
+        log.fine("Adding to cache: " + doc);
         String title = doc.getString("title");
-        List<Document> result = articleCache.stream()
-                                            .filter(d -> title.equals(d.getString("title")))
-                                            .collect(Collectors.toList());
-        if(result.size() > 0){
+
+        boolean exist = articleCache.stream()
+                                    .filter(d -> d.getString("title").equals(title))
+                                    .findFirst()
+                                    .isPresent();
+
+        if (exist) {
             // means the article is already in the list
             // need its location to update it
-            System.out.println("fired!");
-            for(int i=0; i<articleCache.size(); i++){
-                if(articleCache.get(i).getString("title").equals(title)){
-                    articleCache.add(i, doc);
+            for (int i = 0; i < articleCache.size(); i++) {
+                if (articleCache.get(i).getString("title").equals(title)) {
+                    articleCache.set(i, doc);
+                    break;
                 }
             }
-        }
+        } // end if
         else {
             if (articleCache.size() >= CACHE_MAX_SIZE) {
-                log.fine("Cache size < " + CACHE_MAX_SIZE);
+                log.fine("Cache size >= " + CACHE_MAX_SIZE);
                 articleCache.remove(articleCache.size() - 1);
                 articleCache.add(0, doc);
             } else {
-
-                log.fine("Cache size > " + CACHE_MAX_SIZE);
+                log.fine("Cache size < " + CACHE_MAX_SIZE);
                 articleCache.add(0, doc);
             }
-            articleCache.stream().forEach(a -> log.fine("Adding article: " + a.get("title") + " to cache"));
-        }
-    }
+        } //end else
+    } // end addToCache
 
     public static synchronized List<Document> getRecentArticles(){
         log.fine("Recent articles in cache: "+articleCache);
