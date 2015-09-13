@@ -9,7 +9,7 @@ angular.module('BlogApp')
     $scope.login = function(){
         var credentials = {};
 
-        credentials.username = $scope.username;
+        credentials.email = $scope.email;
         credentials.password = $scope.password;
 
         Authentication.login(credentials).then(function(){

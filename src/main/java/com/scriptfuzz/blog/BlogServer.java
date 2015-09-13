@@ -7,6 +7,8 @@ import com.mongodb.MongoClientOptions;
 import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
+import org.eclipse.jetty.server.Authentication;
+import org.jasypt.util.password.StrongPasswordEncryptor;
 import spark.Response;
 import spark.utils.IOUtils;
 
@@ -30,6 +32,7 @@ public class BlogServer {
     private static final int CONNECTION_POOLS = 100;
 
     private final ArticleDAO articleDAO;
+    private final UserDAO userDAO;
 
     //Todo: Use actual username password combo
     // Right now is being ignored
@@ -43,7 +46,7 @@ public class BlogServer {
        final MongoDatabase blogDatabase = mongoClient.getDatabase("test");
        log.info("Got database: "+blogDatabase);
        articleDAO = new ArticleDAO(blogDatabase);
-
+       userDAO = new UserDAO(blogDatabase);
        // Serve the static files
        if("production".equals(mode))
        {
@@ -115,11 +118,47 @@ public class BlogServer {
         });
 
         post("/auth/login", (req, res) -> {
-            // rverify password
-            return "{\"id\": 5,"+
-                   "\"email\": \"jose.diaz30@upr.edu\","+
-                    "\"name\": \"Jose Diaz\","+
-                    "\"type\": \"admin\"}";
+            // Get the user login form data
+            log.info("Attempting to login");
+            Document payload = Document.parse(req.body());
+            String email = payload.getString("email");
+            String password = payload.getString("password");
+            log.info("credentials: email="+email);
+
+            // Find the user with such credentails
+            Document user = null;
+            if(email != null && password != null) {
+                user = userDAO.findUser(email);
+            }
+            else{
+                // If the user is not in db return guest
+                final String jsonStr = "{\"email\": \"non@gmail.com\","+
+                        "\"name\": \"Any\","+
+                        "\"type\": \"guest\"}";
+                setResponseMeta(res, "application/json", 200, jsonStr);
+                return res.body();
+            }
+
+            // Authenticate the user
+            log.info("user found: " + user.toJson());
+            boolean authorized = Util.authenticate(password , user.getString("password"));
+                Document respUser = new Document();
+                respUser.append("type", user.getString("type"));
+                respUser.append("email", user.getString("email"));
+
+            log.info("Authorized attempted user access: "+authorized);
+            if(authorized){
+
+                String jsonStr = respUser.toJson();
+                setResponseMeta(res, "application/json", 200, jsonStr);
+            }
+            else{
+                final String jsonStr = "{\"email\": \"non@gmail.com\","+
+                        "\"name\": \"Any\","+
+                        "\"type\": \"guest\"}";
+                setResponseMeta(res, "application/json", 200, jsonStr);
+            }
+            return res.body();
         });
 
         // Secure the api routes

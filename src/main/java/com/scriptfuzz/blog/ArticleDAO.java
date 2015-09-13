@@ -21,7 +21,7 @@ public class ArticleDAO {
     private final MongoCollection<Document> articlesCollection;
 
     public ArticleDAO(MongoDatabase blogDatabase) {
-            articlesCollection = blogDatabase.getCollection("articles");
+        articlesCollection = blogDatabase.getCollection("articles");
     }
 
     /**
@@ -37,8 +37,8 @@ public class ArticleDAO {
         List<Document> all = articlesCollection.find().into(new ArrayList<>());
         log.info("Returning this from DAO: "+all);
         return all;
-
-    }// So if my new query must look like this: db.articles.find({},{"_id":false})
+    }
+    // So if my new query must look like this: db.articles.find({},{"_id":false})
      // I need to provide the query in the same fashion articles being the articlesCollection
      // However, the api shows the find() only to take 1 filter. That is to say one Document
      // How to achieve the above?
@@ -125,6 +125,7 @@ public class ArticleDAO {
         return parseMarkdown(markdown);
     }
 
+
     /**
      * Generates preview from html code
      * @param html The html to generate the preview from
@@ -155,6 +156,5 @@ public class ArticleDAO {
         log.info("Markdown HTML equivalent: "+res);
         return res;
     }
-
 
 }
