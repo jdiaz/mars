@@ -22,12 +22,12 @@ public class Util {
         boolean success = false;
         if(passwordEncryptor.checkPassword(plain, encrypted)){
             // correct
-            log.info("success: "+success);
             success = true;
+            log.fine("Password match: "+success);
         }else{
             //bad login
-            log.info("success: "+success);
             success = false;
+            log.fine("Password match: "+success);
         }
         return success;
     }

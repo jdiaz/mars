@@ -146,7 +146,7 @@ public class BlogServer {
                 respUser.append("type", user.getString("type"));
                 respUser.append("email", user.getString("email"));
 
-            log.info("Authorized attempted user access: "+authorized);
+            log.info("Attempted user login access, success: "+authorized);
             if(authorized){
 
                 String jsonStr = respUser.toJson();
@@ -167,9 +167,9 @@ public class BlogServer {
             if(!authorized) {
                 halt(401);
                 res.redirect("/");
-                System.out.println("Not authorized access");
+                log.info("Authorized API access: "+authorized);
             }
-            System.out.println("Authorized access");
+            log.info("Authorized API access: "+authorized);
         });
 
         /**
@@ -292,7 +292,6 @@ public class BlogServer {
                 String jsonStr = "{\"success\":false}";
                 setResponseMeta(res, "application/json", 200, jsonStr);
             }
-            log.info("Response: " + req.body());
             return res.body();
         });
 
@@ -319,7 +318,6 @@ public class BlogServer {
                 String jsonStr = "{\"success\":false}";
                 setResponseMeta(res, "application/json", 200, jsonStr);
             }
-            log.info("Response: " + req.body());
             return res.body();
         });
 
@@ -367,7 +365,7 @@ public class BlogServer {
      * @param body The body of the response
      */
     private static void setResponseMeta(Response res, String contentType, int code, String body){
-        log.info("Response: " + body);
+        log.fine("Response: " + body);
         res.status(code);
         res.type(contentType);
         res.body(body);
