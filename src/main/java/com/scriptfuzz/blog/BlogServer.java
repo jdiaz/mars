@@ -114,6 +114,14 @@ public class BlogServer {
             }
         });
 
+        post("/auth/login", (req, res) -> {
+            // rverify password
+            return "{\"id\": 5,"+
+                   "\"email\": \"jose.diaz30@upr.edu\","+
+                    "\"name\": \"Jose Diaz\","+
+                    "\"type\": \"admin\"}";
+        });
+
         // Secure the api routes
         before(API_CONTEXT +"*", (req, res) -> {
             boolean authorized = true;

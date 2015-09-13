@@ -46,11 +46,9 @@ angular.module('BlogApp')
             run: function(route) {
                 var filter = getFilter(route);
 
-                if(filter != null && filter.redirectUrl != null)
-                {
+                if(filter != null && filter.redirectUrl != null) {
                     // User can access this page
-                    if(! filter.callback())
-                    {
+                    if(! filter.callback()) {
                         $location.path(filter.redirectUrl);
                     }
                 }

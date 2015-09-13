@@ -25,16 +25,25 @@ angular.module('BlogApp', ['ngRoute'])
                 templateUrl: '/partials/article.html',
                 controller: 'ArticleCtrl'
             })
+            .when('/articles/login', {
+                templateUrl: '/partials/login.html',
+                controller: 'LoginCtrl'
+            })
+            .when('/articles/logout', {
+                templateUrl: '/partials/logout.html',
+                controller: 'LogoutCtrl'
+            })
             .otherwise({
                 redirectTo: '/'
             });
 
     })
     .run(function(Authentication, Application, $rootScope, $location, RouteFilter){
-
-        Authentication.requestUser().then(function(){
-          Application.makeReady();
-        });
+        //
+        //Authentication.requestUser().then(function(){
+        //  Application.makeReady();
+        //});
+        Application.makeReady();
 
         $rootScope.$on('$locationChangeStart', function(scope, next, current){
 

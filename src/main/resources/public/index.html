@@ -17,6 +17,8 @@
             <ul class="nav nav-pills">
                 <li><a href="/">Home</a></li>
                 <li ng-show="canAccess('/articles/admin')"><a href="/articles/admin">Admin</a></li>
+                <li ><a href="/articles/login">Login</a></li>
+                <li ng-show="canAccess('/articles/admin')" ><a href="/articles/logout">Logout</a></li>
             </ul>
 
             <h1 class="blog-header">
@@ -53,6 +55,8 @@
    <script src="/js/controllers/loading.js" type="application/javascript"></script>
    <script src="/js/controllers/article.js" type="application/javascript"></script>
    <script src="/js/controllers/admin.js" type="application/javascript"></script>
+   <script src="/js/controllers/login.js" type="application/javascript"></script>
+   <script src="/js/controllers/logout.js" type="application/javascript"></script>
 
 </body>
 </html>

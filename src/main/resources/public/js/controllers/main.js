@@ -7,7 +7,7 @@ angular.module('BlogApp')
     .controller('MainCtrl', function ($scope, $sce, $http, Authentication, RouteFilter) {
         console.log('inside controller');
 
-        $scope.canAccess = function(route){
+        $scope.canAccess = function(route) {
             return RouteFilter.canAccess(route);
         }
 
