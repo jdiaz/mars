@@ -1,65 +1,56 @@
 {
-  "title" : "4-Changes-are-good",
-  "author" : "Ned",
-  "htmlContent" : "<h3>Hi</h3>\n<p>testingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtesting</p>\n<p>testingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtesting</p>\n<h2>Some other</h2>\n<p>testingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtesting</p>\n",
-  "markdownContent" : "### Hi\n\ntestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtesting\n\ntestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtesting\n\n## Some other\n\ntestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtesting",
-  "tags" : [
-    "car",
-    "movies"
+  "title": "Sample-post",
+  "author": "J. Diaz",
+  "htmlContent": "<h3>Lets start!</h3>\n<p>Blog articles API for <strong>Script Fuzz</strong>. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here.</p>\n<h3>Requirements:</h3>\n<ol>\n<li><code>Java 8</code>  or higher</li>\n<li><code>MongoDB</code></li>\n<li><code>Maven 3.3.1</code> or higher</li>\n</ol>\n<h3>Usage:</h3>\n<ul>\n<li>Add <strong>Maven</strong> and <strong>Java</strong> to your <code>PATH</code> variable</li>\n<li>Assuming you have <code>MongoDB</code> running on your system <code>@port 27017</code></li>\n<li>Clone this repository\\n* Run: <code>mvn install</code></li>\n<li>A fat jar will  found under the <code>target</code> directory</li>\n</ul>\n<h3>Code segment</h3>\n<pre>public class Counter{\n\n    private int count;\n\n    public Counter()\n    {\n      count = 0;\n    }\n\n    public int getCount(){\n      return count;\n    }\n\n    public void increment(){\n      count++;\n    }\n}\n</pre><p><img class=\"img-responsive\" src=\"http://i1370.photobucket.com/albums/ag268/josediaz301/xperia_tablet_z_ubuntutouch_zps59f63b33.png\" /></p>",
+  "markdownContent": "### Lets start!\nBlog articles API for **Script Fuzz**. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here.\n### Requirements:\n1. ``Java 8``  or higher\n2. ``MongoDB``\n3. ``Maven 3.3.1`` or higher\n\n### Usage:\n* Add **Maven** and **Java** to your ``PATH`` variable\n* Assuming you have `MongoDB` running on your system ``@port 27017`` \n* Clone this repository\\n* Run: ``mvn install``\n* A fat jar will  found under the ``target`` directory\n\n### Code segment\n```\npublic class Counter{\n\n    private int count;\n\n    public Counter()\n    {\n      count = 0;\n    }\n\n    public int getCount(){\n      return count;\n    }\n\n    public void increment(){\n      count++;\n    }\n}\n```\n\n<img class=\"img-responsive\" src=\"http://i1370.photobucket.com/albums/ag268/josediaz301/xperia_tablet_z_ubuntutouch_zps59f63b33.png\"/>",
+  "tags": [
+    "Ubuntu",
+    "Java",
+    "Fun"
   ],
-  "preview" : "<h3>Hi</h3>\n<p>testingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtesting</p>\n",
-  "date" : "2015-09-11T03:15:04.330Z",
-  "year" : 2015
+  "preview": "<h3>Lets start!</h3>\n<p>Blog articles API for <strong>Script Fuzz</strong>. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here.</p>\n",
+  "date": "2015-09-14T03:48:01.746Z",
+  "year": 2015
 }
 {
-"title" : "3-Changes-are-good",
-"author" : "Ned",
-"htmlContent" : "<h3>Hi</h3>\n<p>testingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtesting</p>\n<p>testingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtesting</p>\n<h2>Some other</h2>\n<p>testingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtesting</p>\n",
-"markdownContent" : "### Hi\n\ntestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtesting\n\ntestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtesting\n\n## Some other\n\ntestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtesting",
-"tags" : [
-"car",
-"movies"
+"title": "Sample-post-number2",
+"author": "J. Diaz",
+"htmlContent": "<h3>Lets start!</h3>\n<p>Blog articles API for <strong>Script Fuzz</strong>. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here.</p>\n<h3>Requirements:</h3>\n<ol>\n<li><code>Java 8</code>  or higher</li>\n<li><code>MongoDB</code></li>\n<li><code>Maven 3.3.1</code> or higher</li>\n</ol>\n<h3>Usage:</h3>\n<ul>\n<li>Add <strong>Maven</strong> and <strong>Java</strong> to your <code>PATH</code> variable</li>\n<li>Assuming you have <code>MongoDB</code> running on your system <code>@port 27017</code></li>\n<li>Clone this repository\\n* Run: <code>mvn install</code></li>\n<li>A fat jar will  found under the <code>target</code> directory</li>\n</ul>\n<h3>Code segment</h3>\n<pre>public class Counter{\n\n    private int count;\n\n    public Counter()\n    {\n      count = 0;\n    }\n\n    public int getCount(){\n      return count;\n    }\n\n    public void increment(){\n      count++;\n    }\n}\n</pre><p><img class=\"img-responsive\" src=\"http://i1370.photobucket.com/albums/ag268/josediaz301/xperia_tablet_z_ubuntutouch_zps59f63b33.png\" /></p>",
+"markdownContent": "### Lets start!\nBlog articles API for **Script Fuzz**. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here.\n### Requirements:\n1. ``Java 8``  or higher\n2. ``MongoDB``\n3. ``Maven 3.3.1`` or higher\n\n### Usage:\n* Add **Maven** and **Java** to your ``PATH`` variable\n* Assuming you have `MongoDB` running on your system ``@port 27017`` \n* Clone this repository\\n* Run: ``mvn install``\n* A fat jar will  found under the ``target`` directory\n\n### Code segment\n```\npublic class Counter{\n\n    private int count;\n\n    public Counter()\n    {\n      count = 0;\n    }\n\n    public int getCount(){\n      return count;\n    }\n\n    public void increment(){\n      count++;\n    }\n}\n```\n\n<img class=\"img-responsive\" src=\"http://i1370.photobucket.com/albums/ag268/josediaz301/xperia_tablet_z_ubuntutouch_zps59f63b33.png\"/>",
+"tags": [
+"Ubuntu",
+"Java",
+"Fun"
 ],
-"preview" : "<h3>Hi</h3>\n<p>testingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtesting</p>\n",
-"date" : "2015-09-11T03:15:04.330Z",
-"year" : 2015
+"preview": "<h3>Lets start!</h3>\n<p>Blog articles API for <strong>Script Fuzz</strong>. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here.</p>\n",
+"date": "2015-09-14T03:48:01.746Z",
+"year": 2015
 }
 {
-"title" : "2-Changes-are-good",
-"author" : "Ned",
-"htmlContent" : "<h3>Hi</h3>\n<p>testingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtesting</p>\n<p>testingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtesting</p>\n<h2>Some other</h2>\n<p>testingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtesting</p>\n",
-"markdownContent" : "### Hi\n\ntestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtesting\n\ntestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtesting\n\n## Some other\n\ntestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtesting",
-"tags" : [
-"car",
-"movies"
+"title": "Sample-post-number3",
+"author": "J. Diaz",
+"htmlContent": "<h3>Lets start!</h3>\n<p>Blog articles API for <strong>Script Fuzz</strong>. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here.</p>\n<h3>Requirements:</h3>\n<ol>\n<li><code>Java 8</code>  or higher</li>\n<li><code>MongoDB</code></li>\n<li><code>Maven 3.3.1</code> or higher</li>\n</ol>\n<h3>Usage:</h3>\n<ul>\n<li>Add <strong>Maven</strong> and <strong>Java</strong> to your <code>PATH</code> variable</li>\n<li>Assuming you have <code>MongoDB</code> running on your system <code>@port 27017</code></li>\n<li>Clone this repository\\n* Run: <code>mvn install</code></li>\n<li>A fat jar will  found under the <code>target</code> directory</li>\n</ul>\n<h3>Code segment</h3>\n<pre>public class Counter{\n\n    private int count;\n\n    public Counter()\n    {\n      count = 0;\n    }\n\n    public int getCount(){\n      return count;\n    }\n\n    public void increment(){\n      count++;\n    }\n}\n</pre><p><img class=\"img-responsive\" src=\"http://i1370.photobucket.com/albums/ag268/josediaz301/xperia_tablet_z_ubuntutouch_zps59f63b33.png\" /></p>",
+"markdownContent": "### Lets start!\nBlog articles API for **Script Fuzz**. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here.\n### Requirements:\n1. ``Java 8``  or higher\n2. ``MongoDB``\n3. ``Maven 3.3.1`` or higher\n\n### Usage:\n* Add **Maven** and **Java** to your ``PATH`` variable\n* Assuming you have `MongoDB` running on your system ``@port 27017`` \n* Clone this repository\\n* Run: ``mvn install``\n* A fat jar will  found under the ``target`` directory\n\n### Code segment\n```\npublic class Counter{\n\n    private int count;\n\n    public Counter()\n    {\n      count = 0;\n    }\n\n    public int getCount(){\n      return count;\n    }\n\n    public void increment(){\n      count++;\n    }\n}\n```\n\n<img class=\"img-responsive\" src=\"http://i1370.photobucket.com/albums/ag268/josediaz301/xperia_tablet_z_ubuntutouch_zps59f63b33.png\"/>",
+"tags": [
+"Ubuntu",
+"Java",
+"Fun"
 ],
-"preview" : "<h3>Hi</h3>\n<p>testingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtesting</p>\n",
-"date" : "2015-09-11T03:15:04.330Z",
-"year" : 2015
+"preview": "<h3>Lets start!</h3>\n<p>Blog articles API for <strong>Script Fuzz</strong>. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here.</p>\n",
+"date": "2015-09-14T03:48:01.746Z",
+"year": 2015
 }
 {
-"title" : "1-Changes-are-good",
-"author" : "Ned",
-"htmlContent" : "<h3>Hi</h3>\n<p>testingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtesting</p>\n<p>testingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtesting</p>\n<h2>Some other</h2>\n<p>testingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtesting</p>\n",
-"markdownContent" : "### Hi\n\ntestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtesting\n\ntestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtesting\n\n## Some other\n\ntestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtesting",
-"tags" : [
-"car",
-"movies"
+"title": "Sample-post-number3",
+"author": "J. Diaz",
+"htmlContent": "<h3>Lets start!</h3>\n<p>Blog articles API for <strong>Script Fuzz</strong>. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here.</p>\n<h3>Requirements:</h3>\n<ol>\n<li><code>Java 8</code>  or higher</li>\n<li><code>MongoDB</code></li>\n<li><code>Maven 3.3.1</code> or higher</li>\n</ol>\n<h3>Usage:</h3>\n<ul>\n<li>Add <strong>Maven</strong> and <strong>Java</strong> to your <code>PATH</code> variable</li>\n<li>Assuming you have <code>MongoDB</code> running on your system <code>@port 27017</code></li>\n<li>Clone this repository\\n* Run: <code>mvn install</code></li>\n<li>A fat jar will  found under the <code>target</code> directory</li>\n</ul>\n<h3>Code segment</h3>\n<pre>public class Counter{\n\n    private int count;\n\n    public Counter()\n    {\n      count = 0;\n    }\n\n    public int getCount(){\n      return count;\n    }\n\n    public void increment(){\n      count++;\n    }\n}\n</pre><p><img class=\"img-responsive\" src=\"http://i1370.photobucket.com/albums/ag268/josediaz301/xperia_tablet_z_ubuntutouch_zps59f63b33.png\" /></p>",
+"markdownContent": "### Lets start!\nBlog articles API for **Script Fuzz**. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here.\n### Requirements:\n1. ``Java 8``  or higher\n2. ``MongoDB``\n3. ``Maven 3.3.1`` or higher\n\n### Usage:\n* Add **Maven** and **Java** to your ``PATH`` variable\n* Assuming you have `MongoDB` running on your system ``@port 27017`` \n* Clone this repository\\n* Run: ``mvn install``\n* A fat jar will  found under the ``target`` directory\n\n### Code segment\n```\npublic class Counter{\n\n    private int count;\n\n    public Counter()\n    {\n      count = 0;\n    }\n\n    public int getCount(){\n      return count;\n    }\n\n    public void increment(){\n      count++;\n    }\n}\n```\n\n<img class=\"img-responsive\" src=\"http://i1370.photobucket.com/albums/ag268/josediaz301/xperia_tablet_z_ubuntutouch_zps59f63b33.png\"/>",
+"tags": [
+"Ubuntu",
+"Java",
+"Fun"
 ],
-"preview" : "<h3>Hi</h3>\n<p>testingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtesting</p>\n",
-"date" : "2015-09-11T03:15:04.330Z",
-"year" : 2015
-}
-{
-"title" : "0-Changes-are-good",
-"author" : "Ned",
-"htmlContent" : "<h3>Hi</h3>\n<p>testingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtesting</p>\n<p>testingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtesting</p>\n<h2>Some other</h2>\n<p>testingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtesting</p>\n",
-"markdownContent" : "### Hi\n\ntestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtesting\n\ntestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtesting\n\n## Some other\n\ntestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtesting",
-"tags" : [
-"car",
-"movies"
-],
-"preview" : "<h3>Hi</h3>\n<p>testingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtesting</p>\n",
-"date" : "2015-09-11T03:15:04.330Z",
-"year" : 2015
+"preview": "<h3>Lets start!</h3>\n<p>Blog articles API for <strong>Script Fuzz</strong>. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here. Random text goes here.</p>\n",
+"date": "2015-09-14T03:48:01.746Z",
+"year": 2015
 }
