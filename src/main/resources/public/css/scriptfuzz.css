@@ -13,3 +13,30 @@
 .divider{
     background-color: #080808;
 }
+
+/* Small devices (tablets, 768px and up) */
+@media (max-width: 480px) {
+    .hideBig {
+        display: none;
+    }
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 767px) {
+    .hideSmall{
+        display: none;
+    }
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 768px) and (max-width: 979px){
+    .hideSmall{
+        display: none;
+    }
+}
+
+@media (min-width: 1200px) {
+    .hideSmall{
+        display: none;
+    }
+}

@@ -4,59 +4,72 @@
     <meta charset="utf-8">
     <meta name="description" content="" >
     <meta name="viewport" content="width=device-width">
-    <title>ScriptFuzz Blog</title>
+    <title>ScriptFuzz Mars</title>
 
     <link rel="stylesheet" href="/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/css/scriptfuzz.css">
 </head>
 <body ng-app="BlogApp">
-   <div ng-controller="MainCtrl">
+<div ng-controller="MainCtrl">
     <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12 col-xs-12 col-md-offset-1 col-md-7 col-lg-offset-2 col-lg-8">
+                <ul class="nav nav-pills">
+                    <li><a href="/">Home</a></li>
+                    <li ng-show="canAccess('/articles/admin')"><a href="/articles/admin">Admin</a></li>
+                    <li ><a href="/articles/login">Login</a></li>
+                    <li ng-show="canAccess('/articles/admin')" ><a href="/articles/logout">Logout</a></li>
+                </ul>
 
-        <div class="col-lg-offset-2 col-lg-8 col-sm-12 col-xs-12">
-            <ul class="nav nav-pills">
-                <li><a href="/">Home</a></li>
-                <li ng-show="canAccess('/articles/admin')"><a href="/articles/admin">Admin</a></li>
-                <li ><a href="/articles/login">Login</a></li>
-                <li ng-show="canAccess('/articles/admin')" ><a href="/articles/logout">Logout</a></li>
-            </ul>
+                <h1 class="blog-header hideBig" >
+                    <img src="/css/sf.png" height="100" width="100">
+                    <strong>Script</strong>
+                    <strong class="blog-second"> Fuzz</strong>:
+                    <strong class="blog-project-name"> Mars</strong>
+                </h1>
 
-            <h1 class="blog-header">
-                <img src="/css/sf.png" height="100" width="100">
-                <strong>Script</strong>
-                <strong class="blog-second"> Fuzz</strong>:
-                <strong class="blog-project-name"> Mars</strong>
-            </h1>
-            <hr class="divider">
-            <br>
-            <br>
-            <div ng-view></div>
-        </div> <!-- end of column -->
-    </div> <!-- row -->
-   </div> <!-- controller -->
+                <h3 class="blog-header hideSmall">
+                    <img src="/css/sf.png" height="50" width="50">
+                    <strong>Script</strong>
+                    <strong class="blog-second"> Fuzz</strong>:
+                    <strong class="blog-project-name"> Mars</strong>
+                </h3>
 
-   <script src="/js/jquery-2.0.0.min.js" type="application/javascript"></script>
 
-   <script src="/js/angular.min.js" type="application/javascript"></script>
-   <script src="/js/bootstrap.min.js" type="application/javascript"></script>
-   <script src="/js/angular-route.js" type="application/javascript"></script>
-   <script src="/js/angular-sanitize.min.js" type="application/javascript"></script>
+                <hr class="divider">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-xs-12 col-md-8 col-md-offset-1 col-lg-offset-2 col-lg-8">
+                <br>
+                <div ng-view></div>
+            </div>  <!-- end of column -->
+        </div> <!-- row -->
+    </div> <!-- container-fluid -->
+</div> <!-- controller -->
 
-   <script src="/js/angular-resource.min.js" type="application/javascript"></script>
+<script src="/js/jquery-2.0.0.min.js" type="application/javascript"></script>
 
-   <script src="/js/app.js" type="application/javascript"></script>
-   <script src="/js/filters.js" type="application/javascript"></script>
+<script src="/js/angular.min.js" type="application/javascript"></script>
+<script src="/js/bootstrap.min.js" type="application/javascript"></script>
+<script src="/js/angular-route.js" type="application/javascript"></script>
+<script src="/js/angular-sanitize.min.js" type="application/javascript"></script>
 
-   <script src="/js/controllers/main.js" type="application/javascript"></script>
-   <script src="/js/services/auth.js" type="application/javascript"></script>
-   <script src="/js/services/application.js" type="application/javascript"></script>
-   <script src="/js/services/routefilter.js" type="application/javascript"></script>
+<script src="/js/angular-resource.min.js" type="application/javascript"></script>
 
-   <script src="/js/controllers/loading.js" type="application/javascript"></script>
-   <script src="/js/controllers/article.js" type="application/javascript"></script>
-   <script src="/js/controllers/admin.js" type="application/javascript"></script>
-   <script src="/js/controllers/login.js" type="application/javascript"></script>
-   <script src="/js/controllers/logout.js" type="application/javascript"></script>
+<script src="/js/app.js" type="application/javascript"></script>
+<script src="/js/filters.js" type="application/javascript"></script>
+
+<script src="/js/controllers/main.js" type="application/javascript"></script>
+<script src="/js/services/auth.js" type="application/javascript"></script>
+<script src="/js/services/application.js" type="application/javascript"></script>
+<script src="/js/services/routefilter.js" type="application/javascript"></script>
+
+<script src="/js/controllers/loading.js" type="application/javascript"></script>
+<script src="/js/controllers/article.js" type="application/javascript"></script>
+<script src="/js/controllers/admin.js" type="application/javascript"></script>
+<script src="/js/controllers/login.js" type="application/javascript"></script>
+<script src="/js/controllers/logout.js" type="application/javascript"></script>
 
 </body>
 </html>
