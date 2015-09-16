@@ -32,5 +32,21 @@ Blog articles API for **Script Fuzz**
 * To Run simple execute: ```java -jar mars-VERSION-jar-with-dependnecies.jar```, where VERSION is as specified in the ```pom.xml```. 
 
 ### Preview:
+Mobile view
 ![](http://i1370.photobucket.com/albums/ag268/josediaz301/mars_zpsaurru6cf.png)
+
+Admin page
+![](http://i1370.photobucket.com/albums/ag268/josediaz301/adminpage_zpspaivonfd.png)
+
+You can write an article in markdown
+![](http://i1370.photobucket.com/albums/ag268/josediaz301/find_zpsqayy59wo.png)
+
+See the preview
+![](http://i1370.photobucket.com/albums/ag268/josediaz301/preview_zpsip1vqkp4.png)
+![](http://i1370.photobucket.com/albums/ag268/josediaz301/morepreview_zpsukmb0wke.png)
+
+You can even find a previous article and update/replace it with the changes.
+
+
+
 
