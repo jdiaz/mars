@@ -30,7 +30,7 @@ public class BlogServer {
 
     private static final String API_CONTEXT = "/api/";
     private static final int CONNECTION_POOLS = 100;
-
+    private static int port;
     private final ArticleDAO articleDAO;
     private final UserDAO userDAO;
 
@@ -38,6 +38,7 @@ public class BlogServer {
     // Right now is being ignored
    public BlogServer(String username, String password, String host, int port, String mode){
        log.info("Server running on port: "+port);
+
        MongoClientOptions options = MongoClientOptions.builder().connectionsPerHost(CONNECTION_POOLS).build();
 
        final MongoClient mongoClient = new MongoClient(new ServerAddress(host, port), options);
@@ -48,10 +49,8 @@ public class BlogServer {
        articleDAO = new ArticleDAO(blogDatabase);
        userDAO = new UserDAO(blogDatabase);
        // Serve the static files
-       if("production".equals(mode))
-       {
-           staticFileLocation("/public");
-       }else externalStaticFileLocation("src/main/resources/public/");
+       if("production".equals(mode)) staticFileLocation("/public");
+       else externalStaticFileLocation("src/main/resources/public/");
 
        // Enable CORS
        enableCORS();
@@ -163,7 +162,15 @@ public class BlogServer {
 
         // Secure the api routes
         before(API_CONTEXT +"*", (req, res) -> {
+            log.info("Attemping to access API routes: "+req.host());
+            System.out.println(req.raw().getHeader("mars-gui"));
             boolean authorized = true;
+            final String localhost = "localhost:4567";
+            if( !localhost.equalsIgnoreCase(req.host()) ){
+                authorized = false;
+                log.severe("Unauthorized API access attempt success: "+authorized + " req.host="+req.host());
+            }
+
             if(!authorized) {
                 halt(401);
                 res.redirect("/");
