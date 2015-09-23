@@ -166,7 +166,8 @@ public class BlogServer {
             System.out.println(req.raw().getHeader("mars-gui"));
             boolean authorized = true;
             final String localhost = "localhost:4567";
-            if( !localhost.equalsIgnoreCase(req.host()) ){
+            final String scriptfuzz = "scriptfuzz.com";
+            if( !localhost.equalsIgnoreCase(req.host()) || !scriptfuzz.equalsIgnoreCase(req.host()) ){
                 authorized = false;
                 log.severe("Unauthorized API access attempt success: "+authorized + " req.host="+req.host());
             }
