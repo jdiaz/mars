@@ -45,11 +45,13 @@ public class BlogServer {
        log.info("Connecting to mongo: "+mongoClient);
        final MongoDatabase blogDatabase = mongoClient.getDatabase("test");
        log.info("Got database: "+blogDatabase);
+
        articleDAO = new ArticleDAO(blogDatabase);
        userDAO = new UserDAO(blogDatabase);
+
        // Serve the static files
        if("production".equals(mode)) staticFileLocation("/public");
-       else externalStaticFileLocation("src/main/resources/public/");
+       else                          externalStaticFileLocation("src/main/resources/public/");
 
        // Enable CORS
        enableCORS();
@@ -66,7 +68,7 @@ public class BlogServer {
     //Todo: Actually use credentials
     public static void main(String[] args){
 
-        String mode = System.getProperty("mode");
+        final String mode = System.getProperty("mode");
         log.info("Running on mode: "+mode);
         if("production".equalsIgnoreCase(mode)) {
             String username = "Thatguy";
@@ -131,8 +133,8 @@ public class BlogServer {
             else{
                 // If the user is not in db return guest
                 final String jsonStr = "{\"email\": \"non@gmail.com\","+
-                        "\"name\": \"Any\","+
-                        "\"type\": \"guest\"}";
+                                       "\"name\": \"Any\","+
+                                       "\"type\": \"guest\"}";
                 setResponseMeta(res, "application/json", 200, jsonStr);
                 return res.body();
             }
@@ -152,8 +154,8 @@ public class BlogServer {
             }
             else{
                 final String jsonStr = "{\"email\": \"non@gmail.com\","+
-                        "\"name\": \"Any\","+
-                        "\"type\": \"guest\"}";
+                                       "\"name\": \"Any\","+
+                                       "\"type\": \"guest\"}";
                 setResponseMeta(res, "application/json", 200, jsonStr);
             }
             return res.body();
@@ -188,16 +190,16 @@ public class BlogServer {
         get(API_CONTEXT+ "/cache/load/:year", (req, res) -> {
             String y = req.params("year");
             Map<String,Object> params = new HashMap<>();
-	    int count = 0;
-	    try{
+            int count = 0;
+            try{
               params.put("year", Integer.parseInt(y));
               List<Document> recent = articleDAO.findArticlesByFilter(params);
               log.info("loading from /api/cache/load/"+y +" total of: "+recent.size());
               count = ArticleCache.loadCache(recent);
             }catch(Exception e){
-              log.severe("Error parsing year to Int.");
+                log.severe("Error parsing year to Int.");
             }
-	    log.info("Loaded " + count + " articles from db to cache");
+            log.info("Loaded " + count + " articles from db to cache");
             return count;
         });
 
@@ -231,14 +233,14 @@ public class BlogServer {
         get(API_CONTEXT + "articles/year/:year", (req, res) -> {
             String year = req.params("year");
             Map<String,Object> params = new HashMap<>();
-	    String jsonStr = "[]";
-	    try{
-               params.put("year", Integer.parseInt(year) );
-	       jsonStr = fromListToJsonStr(articleDAO.findArticlesByFilter(params));	
-	    }
-	    catch(Exception e){
-		log.severe("Error parsing year to Int type.");	
-	    }
+            String jsonStr = "[]";
+            try{
+                params.put("year", Integer.parseInt(year) );
+                jsonStr = fromListToJsonStr(articleDAO.findArticlesByFilter(params));
+            }
+            catch(Exception e){
+                log.severe("Error parsing year to Int type.");
+            }
             setResponseMeta(res, "application/json", 200, jsonStr);
             return res.body();
         });
@@ -277,15 +279,15 @@ public class BlogServer {
 
             Map<String,Object> params = new HashMap<>();
             String jsonStr = "[]";
- 	    try{
-	      params.put("year", Integer.parseInt(year));
-              params.put("title", title);
-              jsonStr = fromListToJsonStr(articleDAO.findArticlesByFilter(params));
+            try{
+                params.put("year", Integer.parseInt(year));
+                params.put("title", title);
+                jsonStr = fromListToJsonStr(articleDAO.findArticlesByFilter(params));
             }
-	    catch(Exception e){
-              log.severe("Error parsing year to Int.");
-            }	
-	    setResponseMeta(res, "application/json", 200, jsonStr);
+            catch(Exception e){
+                log.severe("Error parsing year to Int.");
+            }
+            setResponseMeta(res, "application/json", 200, jsonStr);
             return res.body();
         });
 

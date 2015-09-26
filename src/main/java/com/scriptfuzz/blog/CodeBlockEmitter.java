@@ -7,14 +7,11 @@ import java.util.List;
 /**
  * Created by zeek on 09-06-15.
  */
-public class CodeBlockEmitter implements BlockEmitter
-{
-    private static void append(StringBuilder out, List<String> lines)
-    {
+public class CodeBlockEmitter implements BlockEmitter {
+
+    private static void append(StringBuilder out, List<String> lines) {
         out.append("<pre>");
-        for (final String l : lines)
-        {
-            //Utils.escapedAdd(out, l);
+        for (final String l : lines) {
             out.append(l);
             out.append('\n');
         }
@@ -22,24 +19,16 @@ public class CodeBlockEmitter implements BlockEmitter
     }
 
     @Override
-    public void emitBlock(StringBuilder out, List<String> lines, String meta)
-    {
+    public void emitBlock(StringBuilder out, List<String> lines, String meta) {
 
-        if (meta.isEmpty())
-        {
+        if (meta.isEmpty()) {
             append(out, lines);
         }
-        else
-        {
-            try
-            {
-                // Utils#highlight(...) is not included with txtmark, it's sole purpose
-                // is to show what the meta can be used for
-                //out.append(Utils.highlight(lines, meta));
+        else {
+            try {
                 out.append('\n');
             }
-            catch (final Exception e)
-            {
+            catch (final Exception e) {
                 // Ignore or do something, still, pump out the lines
                 append(out, lines);
             }
