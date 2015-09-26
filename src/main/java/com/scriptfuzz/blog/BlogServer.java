@@ -188,13 +188,16 @@ public class BlogServer {
         get(API_CONTEXT+ "/cache/load/:year", (req, res) -> {
             String y = req.params("year");
             Map<String,Object> params = new HashMap<>();
-            params.put("year", Integer.parseInt(y));
-
-            List<Document> recent = articleDAO.findArticlesByFilter(params);
-
-            log.info("loading from /api/cache/load/"+y +" total of: "+recent.size());
-            int count = ArticleCache.loadCache(recent);
-            log.info("Loaded " + count + " articles from db to cache");
+	    int count = 0;
+	    try{
+              params.put("year", Integer.parseInt(y));
+              List<Document> recent = articleDAO.findArticlesByFilter(params);
+              log.info("loading from /api/cache/load/"+y +" total of: "+recent.size());
+              count = ArticleCache.loadCache(recent);
+            }catch(Exception e){
+              log.severe("Error parsing year to Int.");
+            }
+	    log.info("Loaded " + count + " articles from db to cache");
             return count;
         });
 
@@ -228,9 +231,14 @@ public class BlogServer {
         get(API_CONTEXT + "articles/year/:year", (req, res) -> {
             String year = req.params("year");
             Map<String,Object> params = new HashMap<>();
-
-            params.put("year", Integer.parseInt(year) );
-            String jsonStr = fromListToJsonStr(articleDAO.findArticlesByFilter(params));
+	    String jsonStr = "[]";
+	    try{
+               params.put("year", Integer.parseInt(year) );
+	       jsonStr = fromListToJsonStr(articleDAO.findArticlesByFilter(params));	
+	    }
+	    catch(Exception e){
+		log.severe("Error parsing year to Int type.");	
+	    }
             setResponseMeta(res, "application/json", 200, jsonStr);
             return res.body();
         });
@@ -268,11 +276,16 @@ public class BlogServer {
             String title = req.params(":title");
 
             Map<String,Object> params = new HashMap<>();
-            params.put("year", Integer.parseInt(year));
-            params.put("title", title);
-
-            String jsonStr = fromListToJsonStr(articleDAO.findArticlesByFilter(params));
-            setResponseMeta(res, "application/json", 200, jsonStr);
+            String jsonStr = "[]";
+ 	    try{
+	      params.put("year", Integer.parseInt(year));
+              params.put("title", title);
+              jsonStr = fromListToJsonStr(articleDAO.findArticlesByFilter(params));
+            }
+	    catch(Exception e){
+              log.severe("Error parsing year to Int.");
+            }	
+	    setResponseMeta(res, "application/json", 200, jsonStr);
             return res.body();
         });
 
