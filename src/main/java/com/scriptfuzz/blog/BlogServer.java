@@ -12,7 +12,6 @@ import org.jasypt.util.password.StrongPasswordEncryptor;
 import spark.Response;
 import spark.utils.IOUtils;
 
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -167,7 +166,7 @@ public class BlogServer {
             boolean authorized = true;
             final String localhost = "localhost:4567";
             final String scriptfuzz = "scriptfuzz.com";
-            if( !localhost.equalsIgnoreCase(req.host()) || !scriptfuzz.equalsIgnoreCase(req.host()) ){
+            if( !localhost.equalsIgnoreCase(req.host()) ){
                 authorized = false;
                 log.severe("Unauthorized API access attempt success: "+authorized + " req.host="+req.host());
             }
