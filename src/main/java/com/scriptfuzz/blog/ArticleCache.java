@@ -23,9 +23,7 @@ public class ArticleCache {
      * Clears List<Document> cache
      */
     public static synchronized void clearCache(){
-        // Help garbage collector
         log.info("Clearing cache");
-        articleCache.stream().forEach(article -> article=null);
         articleCache = new ArrayList<>();
     }
 
