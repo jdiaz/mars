@@ -1,12 +1,15 @@
 #!/bin/bash
 
-cname=mars
-iname=mars-img
+container_name=mars
+image_name=mars-img
 port=80
 link_alias=db
 link_with=db
 
-docker build -t $iname .
+echo "Building container image..."
+docker build -t $image_name .
+echo "Finished building container image."
 
-docker run --name $cname -d --link $link_with:$link_alias -p $port:3000 $iname
+echo "Started container..."
+docker run --name $container_name -d --link $link_with:$link_alias -p $port:3000 $image_name
 
