@@ -40,7 +40,7 @@ public class BlogServer {
      */
    public BlogServer(){
        log.info("Reading properties...");
-       HashMap<String, String> properties = Util.readProperties("config/blog.properties");
+       HashMap<String, String> properties = new Util().readProperties("/config/blog.properties");
 
        final String api_context = properties.get("api_context");
        API_CONTEXT = api_context; // Store as constant

@@ -42,12 +42,12 @@ public class Util {
      * @param path The path to the property file
      * @return As HashMap of all the properties in the file
      */
-    public static HashMap<String, String> readProperties(String path){
+    public HashMap<String, String> readProperties(String path){
         Properties properties = new Properties();
         InputStream in = null;
         HashMap<String, String> propMap = new HashMap<>();
         try{
-            in = new FileInputStream(path);
+            in = getClass().getResourceAsStream(path);
             properties.load(in);
             for(String key: properties.stringPropertyNames()){
                 String value = properties.getProperty(key);
