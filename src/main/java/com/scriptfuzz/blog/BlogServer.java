@@ -34,13 +34,13 @@ public class BlogServer {
     private final UserDAO userDAO;
 
     /**
-     * Constructs a blog server instance.
+     * Constgiructs a blog server instance.
      * Requires property file "/config/blog.properties"
      * Fetches all properties and instantiates the db connection
      */
    public BlogServer(){
        log.info("Reading properties...");
-       HashMap<String, String> properties = Util.readProperties("/config/blog.properties");
+       HashMap<String, String> properties = Util.readProperties("config/blog.properties");
 
        final String api_context = properties.get("api_context");
        API_CONTEXT = api_context; // Store as constant
