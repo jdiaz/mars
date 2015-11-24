@@ -2,39 +2,39 @@
 
 angular.module('BlogApp', ['ngRoute'])
     .config(function ($routeProvider, $locationProvider) {
-
+        var context = 'blog';
         $locationProvider.html5Mode(true);
         $routeProvider
-            .when('/', {
+            .when('/'+context, {
                 templateUrl: '/partials/main.html',
                 controller: 'MainCtrl'
             })
-            .when('/articles/loading', {
+            .when('/'+context+'/articles/loading', {
                 templateUrl: '/partials/loading.html',
                 controller: 'LoadingCtrl'
             })
-            .when('/articles', {
+            .when('/'+context+'/articles', {
                 templateUrl: '/partials/main.html',
                 controller: 'MainCtrl'
             })
-            .when('/articles/admin', {
+            .when('/'+context+'/articles/admin', {
                 templateUrl: '/partials/admin.html',
                 controller: 'AdminCtrl'
             })
-            .when('/articles/:year/:title', {
+            .when('/'+context+'/articles/:year/:title', {
                 templateUrl: '/partials/article.html',
                 controller: 'ArticleCtrl'
             })
-            .when('/articles/login', {
+            .when('/'+context+'/articles/login', {
                 templateUrl: '/partials/login.html',
                 controller: 'LoginCtrl'
             })
-            .when('/articles/logout', {
+            .when('/'+context+'/articles/logout', {
                 templateUrl: '/partials/logout.html',
                 controller: 'LogoutCtrl'
             })
             .otherwise({
-                redirectTo: '/'
+                redirectTo: '/'+context
             });
 
     })
