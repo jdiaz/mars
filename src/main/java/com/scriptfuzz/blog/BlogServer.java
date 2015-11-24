@@ -12,11 +12,13 @@ import org.jasypt.util.password.StrongPasswordEncryptor;
 import spark.Response;
 import spark.utils.IOUtils;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.logging.Logger;
 
 import static spark.Spark.*;
@@ -27,23 +29,40 @@ public class BlogServer {
 
     public static final Logger log = Logger.getLogger(BlogServer.class.getName());
 
-    private static final String API_CONTEXT = "/api/";
-    private static final int CONNECTION_POOLS = 100;
-    private static int port;
+    private static String API_CONTEXT = "/api/"; //DEFAULT
     private final ArticleDAO articleDAO;
     private final UserDAO userDAO;
 
-    //Todo: Use actual username password combo
-    // Right now is being ignored
-   public BlogServer(String username, String password, String host, int port, String mode){
-       log.info("Server running on port: "+port);
+    /**
+     * Constructs a blog server instance.
+     * Requires property file "/config/blog.properties"
+     * Fetches all properties and instantiates the db connection
+     */
+   public BlogServer(){
+       log.info("Reading properties...");
+       HashMap<String, String> properties = Util.readProperties("/config/blog.properties");
 
-       MongoClientOptions options = MongoClientOptions.builder().connectionsPerHost(CONNECTION_POOLS).build();
+       final String api_context = properties.get("api_context");
+       API_CONTEXT = api_context; // Store as constant
 
-       final MongoClient mongoClient = new MongoClient(new ServerAddress(host, port), options);
+       final String mode = properties.get("mode");
+       final String max_cache_size = properties.get("max_cache_size");
+       final String load_cache = properties.get("load_cache");
+       final int db_connection_pools = Integer.parseInt(properties.get("db_connection_pools"));
+       final String db_host = properties.get("db_host");
+       final int db_port = Integer.parseInt(properties.get("db_port"));
+       final String db_user = properties.get("db_user");
+       final String db_pw = properties.get("db_pw");
+       final String db_name = properties.get("db_name");
+
+       log.info("Successfully read all properties.");
+
+       MongoClientOptions options = MongoClientOptions.builder().connectionsPerHost(db_connection_pools).build();
+
+       final MongoClient mongoClient = new MongoClient(new ServerAddress(db_host, db_port), options);
        //final MongoDatabase blogDatabase = mongoClient.getDatabase("blog");
        log.info("Connecting to mongo: "+mongoClient);
-       final MongoDatabase blogDatabase = mongoClient.getDatabase("test");
+       final MongoDatabase blogDatabase = mongoClient.getDatabase(db_name);
        log.info("Got database: "+blogDatabase);
 
        articleDAO = new ArticleDAO(blogDatabase);
@@ -61,7 +80,7 @@ public class BlogServer {
 
        // Load memory cache
        Map<String,Object> params = new HashMap<>();
-       params.put("year", 2015);
+       params.put("year", load_cache);
        loadCache(params);
    }
 
@@ -73,11 +92,11 @@ public class BlogServer {
         if("production".equalsIgnoreCase(mode)) {
             String username = "Thatguy";
             String password = "thisguy";
-            new BlogServer(username, password, "localhost", 27017, mode);
+            new BlogServer();
         }else{
             String username = "Thatguy";
             String password = "thisguy";
-            new BlogServer(username, password, "localhost", 27017, mode);
+            new BlogServer();
         }
     }
 
