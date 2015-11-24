@@ -2,34 +2,34 @@
 
 angular.module('BlogApp', ['ngRoute'])
     .config(function ($routeProvider, $locationProvider) {
-        var context = 'blog';
+
         $locationProvider.html5Mode(true);
         $routeProvider
-            .when('/'+context, {
+            .when('/', {
                 templateUrl: '/partials/main.html',
                 controller: 'MainCtrl'
             })
-            .when('/'+context+'/articles/loading', {
+            .when('/articles/loading', {
                 templateUrl: '/partials/loading.html',
                 controller: 'LoadingCtrl'
             })
-            .when('/'+context+'/articles', {
+            .when('/articles', {
                 templateUrl: '/partials/main.html',
                 controller: 'MainCtrl'
             })
-            .when('/'+context+'/articles/admin', {
+            .when('/articles/admin', {
                 templateUrl: '/partials/admin.html',
                 controller: 'AdminCtrl'
             })
-            .when('/'+context+'/articles/:year/:title', {
+            .when('/articles/:year/:title', {
                 templateUrl: '/partials/article.html',
                 controller: 'ArticleCtrl'
             })
-            .when('/'+context+'/articles/login', {
+            .when('/articles/login', {
                 templateUrl: '/partials/login.html',
                 controller: 'LoginCtrl'
             })
-            .when('/'+context+'/articles/logout', {
+            .when('/articles/logout', {
                 templateUrl: '/partials/logout.html',
                 controller: 'LogoutCtrl'
             })
