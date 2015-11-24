@@ -34,7 +34,7 @@ angular.module('BlogApp', ['ngRoute'])
                 controller: 'LogoutCtrl'
             })
             .otherwise({
-                redirectTo: '/'+context
+                redirectTo: '/'
             });
 
     })
