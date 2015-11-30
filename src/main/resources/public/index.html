@@ -7,38 +7,50 @@
     <title>ScriptFuzz Mars</title>
 
     <link rel="stylesheet" href="/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/css/scriptfuzz.css">
+    <link rel="stylesheet" href="/css/scriptfuzz-style.css">
 </head>
 <body ng-app="BlogApp">
 <div ng-controller="MainCtrl">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-12 col-xs-12 col-md-offset-1 col-md-7 col-lg-offset-2 col-lg-8">
-                <ul class="nav nav-pills">
-                    <li><a href="/">Home</a></li>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle  collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Script Fuzz</a>
+            </div>
+             <div id="navbar" class="navbar-collapse collapse">   
+                <ul class="nav navbar-nav">
+                   <li class="active"><a href="/blog">Home</a></li>
                     <li ng-show="canAccess('/articles/admin')"><a href="/articles/admin">Admin</a></li>
                     <li ><a href="/articles/login">Login</a></li>
                     <li ng-show="canAccess('/articles/admin')" ><a href="/articles/logout">Logout</a></li>
                 </ul>
+             </div>   
+        </div>
+    </nav>
 
-                <h1 class="blog-header hideBig" >
-                    <img src="/css/sf.png" height="100" width="100">
-                    <strong>Script</strong>
-                    <strong class="blog-second"> Fuzz</strong>:
-                    <strong class="blog-project-name"> Mars</strong>
-                </h1>
+    <header class="jumbotron">
 
-                <h3 class="blog-header hideSmall">
-                    <img src="/css/sf.png" height="50" width="50">
-                    <strong>Script</strong>
-                    <strong class="blog-second"> Fuzz</strong>:
-                    <strong class="blog-project-name"> Mars</strong>
-                </h3>
-
-
-                <hr class="divider">
+        <!-- Main component for a primary marketing message or call to action -->
+        <div class="container">
+            <div class="row row-header">
+                <div class="col-xs-12 col-sm-8">
+                    <h1><img src="css/sf.png" alt="scriptfuzz logo" style="border-radius: 200px;"> Script <span style="color:#131d40">Fuzz</span></h1>
+                </div>
+                <!-- logo -->
+                <div class="col-xs-12 col-sm-4">
+                  <p>Our <span style="color:#131d40"><strong>Tech Blog</strong></span> to get the latests on our projects.</p>
+                </div>
             </div>
         </div>
+    </header>
+
+    <div class="container">
         <div class="row">
             <div class="col-sm-12 col-xs-12 col-md-8 col-md-offset-1 col-lg-offset-2 col-lg-8">
                 <br>

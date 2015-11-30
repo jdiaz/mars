@@ -1,5 +1,5 @@
 <div class="row">
-<h1 class="bLog-header">{{article.dispTitle}}</h1>
+<h1 class="blog-header">{{article.dispTitle}}</h1>
 <p>Posted on <i>{{article.date | date:medium}}</i> by <strong>{{article.author}}</strong></p>
 <!-- Fix automatic newline appending here...-->
 <button class="btn btn-default"  ng-repeat="tag in article.tags" ng-disabled="true">{{ tag }}</button>
