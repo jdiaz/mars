@@ -33,17 +33,16 @@ Blog articles API for **Script Fuzz**
 
 ### Preview:
 Mobile view
-![](http://i1370.photobucket.com/albums/ag268/josediaz301/mars_zpsaurru6cf.png)
-
+![](screenshots/mobile.PNG)
 Admin page
-![](http://i1370.photobucket.com/albums/ag268/josediaz301/adminpage_zpspaivonfd.png)
+![](screenshots/admin.PNG)
 
 You can write an article in markdown
-![](http://i1370.photobucket.com/albums/ag268/josediaz301/find_zpsqayy59wo.png)
+![](screenshots/typeInMarkdown.PNG)
 
 See the preview
-![](http://i1370.photobucket.com/albums/ag268/josediaz301/preview_zpsip1vqkp4.png)
-![](http://i1370.photobucket.com/albums/ag268/josediaz301/morepreview_zpsukmb0wke.png)
+![](screenshots/articleSeciton.PNG)
+![](screenshots/codeSection.PNG)
 
 You can even find a previous article and update/replace it with the changes.
 
