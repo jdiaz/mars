@@ -34,6 +34,7 @@ Blog articles API for **Script Fuzz**
 ### Preview:
 Mobile view
 ![](screenshots/mobile.PNG)
+
 Admin page
 ![](screenshots/admin.PNG)
 
@@ -42,6 +43,7 @@ You can write an article in markdown
 
 See the preview
 ![](screenshots/articleSeciton.PNG)
+
 ![](screenshots/codeSection.PNG)
 
 You can even find a previous article and update/replace it with the changes.
